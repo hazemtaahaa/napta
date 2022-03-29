@@ -39,6 +39,7 @@ class profile extends StatelessWidget {
                   image: Image.asset("assets/images/NAPTA (1)_ccexpress.png")
                       .image,
                 ),
+                //1
               ],
             ),
             Container(
