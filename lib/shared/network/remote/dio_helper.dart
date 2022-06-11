@@ -4,6 +4,7 @@ import 'package:napta/shared/cubit/cubit.dart';
 
 class DioHelper {
   static Dio dio;
+  static Dio dreg;
   static Dio diolog;
 
   static String Token;
@@ -33,6 +34,17 @@ class DioHelper {
         }));
   }
 
+  static void initialize() {
+
+    dreg = Dio(BaseOptions(
+        baseUrl: 'https://5ra.azurewebsites.net/',
+        receiveDataWhenStatusError: true,
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': 'bearer $Token'
+        }));
+  }
+
   static Future<Response> getData({
     @required String url,
     //@required Map<String, dynamic> query,
@@ -48,14 +60,21 @@ class DioHelper {
     return await diolog.post(url, data: data, queryParameters: query);
   }
 
-  static Future<Response> post({
+  static Future<Response> postUser({
     @required String url,
     dynamic query,
     @required Map<String, dynamic> data,
   }) async {
-    return await dio.post(url, data: data, queryParameters: query);
+    return await dreg.post(url, data: data, queryParameters: query);
   }
 
+  static Future<Response> put({
+    @required String url,
+    dynamic query,
+    @required Map<String, dynamic> data,
+  }) async {
+    return await dio.put(url, data: data, queryParameters: query);
+  }
 
   static Future<Response> postPlant({
     @required String url,
@@ -64,5 +83,4 @@ class DioHelper {
   }) async {
     return await dio.post(url, data: data, queryParameters: query);
   }
-
 }

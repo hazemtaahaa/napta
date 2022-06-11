@@ -60,6 +60,7 @@ class AppCubit extends Cubit<AppStates> {
   static String userName;
   static List<Plant> Plants = [];
   static UserData userData;
+  static String Token;
 
 
   void getPlants() {
@@ -84,11 +85,40 @@ class AppCubit extends Cubit<AppStates> {
   void postPlants(
       {@required List<Map<String, dynamic>> plants}) {
     DioHelper.postPlant(
-      url: 'api/userplants/addlist?email=$userName',
-      data:plants
+        url: 'api/userplants/addlist?email=$userName',
+        data:plants
     ).then((value) {
       print(value.toString());
       emit(InterestedPlantsUpdated());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  void putUser(
+      {@required Map<String, dynamic> User}) {
+    DioHelper.put(
+      url: 'api/Users/update',
+      data:User,
+    ).then((value) {
+      print(value.toString());
+      emit(UserDataUpdated());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  void postUser(
+      {@required Map<String, dynamic> User}) {
+    print('Post user data is  : $User');
+    DioHelper.initialize();
+    DioHelper.postUser(
+        url: 'api/accounts/register',
+        data:User,
+        query: null
+    ).then((value) {
+      print(value.toString());
+      emit(RegisteredSuccessfully());
     }).catchError((error) {
       print(error.toString());
     });
@@ -111,7 +141,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void getUserData(String Token) {
+  void getUserData() {
     DioHelper.Token = Token;
     DioHelper.DoSomething();
     print('Token from get user data$Token');
@@ -129,6 +159,8 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 }
+
+
 
 class MyInterstedPlants {
   String plantName;

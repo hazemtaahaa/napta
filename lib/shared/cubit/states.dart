@@ -31,3 +31,7 @@ class ProfileLoadingSuccess extends AppStates{
 }
 
 class InterestedPlantsUpdated extends AppStates{}
+
+class UserDataUpdated extends AppStates{}
+class RegisteredSuccessfully extends AppStates{}
+
