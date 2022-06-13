@@ -1,16 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:napta/modules/login/LoginScreen.dart';
+import 'package:napta/shared/cubit/cubit.dart';
+import 'package:napta/shared/cubit/states.dart';
 
-class ChangePassword extends StatefulWidget  {
-  @override
-  _ChangePasswordState createState() => _ChangePasswordState();
-}
-
-class _ChangePasswordState extends State<ChangePassword> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class ChangePassword extends StatelessWidget  {
 
   @override
 
@@ -19,8 +14,23 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool newPasswordVisible=false;
 
   bool confirmPasswordVisible=false;
-
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+  var oldPasswordController = TextEditingController();
   Widget build(BuildContext context) {
+    return  BlocConsumer<AppCubit, AppStates>(
+        listener: (context, AppStates state) {
+          if(state is PasswordChangedSuccessfully)
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      LoginScreen()),
+            );
+
+        },
+    builder: (context, AppStates state) {
+    AppCubit cubit = AppCubit.get(context);
     return Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -71,7 +81,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ]),
                             ), //السيركل افاتار
                             Text(
-                              "Hazem Taha",
+                            "${AppCubit.userData.FirstName} ${AppCubit.userData.LastName}" ,
                               style: TextStyle(
                                   color: Colors.green[900],
                                   fontSize: 25.0,
@@ -87,7 +97,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               padding: const EdgeInsets.all(8.0),
                               child: TextField(
                                 obscureText: !passwordVisible,
-                                controller: null,
+                                controller: oldPasswordController,
                                 autofocus: false,
                                 style: new TextStyle(
                                   fontSize: 20.0, ),
@@ -102,9 +112,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                                         passwordVisible?Icons.visibility:Icons.visibility_off
                                     ),
                                     onPressed: (){
-                                      setState(() {
-                                        passwordVisible=!passwordVisible;
-                                      });
+                                      //setState(() {
+                                        passwordVisible= cubit.changePasswordVisablity(passwordVisible);
+                                      //});
                                     },
                                   ),
 
@@ -126,7 +136,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               height: 70,
                               padding: const EdgeInsets.all(8.0),
                               child: TextField(
-                                controller: null,
+                                controller: passwordController,
                                 obscureText:!newPasswordVisible,
                                 autofocus: false,
                                 style: new TextStyle(
@@ -141,9 +151,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                                         newPasswordVisible?Icons.visibility:Icons.visibility_off
                                     ),
                                     onPressed: (){
-                                      setState(() {
-                                        newPasswordVisible=!newPasswordVisible;
-                                      });
+                                      //setState(() {
+                                      newPasswordVisible= cubit.changePasswordVisablity(newPasswordVisible);
+
+
+                                      //});
                                     },
                                   ),
                                   contentPadding: const EdgeInsets.only(
@@ -163,7 +175,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               height: 70,
                               padding: const EdgeInsets.all(8.0),
                               child: TextField(
-                                controller: null,
+                                controller: confirmPasswordController,
                                 obscureText:!confirmPasswordVisible ,
                                 autofocus: false,
                                 style: new TextStyle(
@@ -178,9 +190,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                                         confirmPasswordVisible?Icons.visibility:Icons.visibility_off
                                     ),
                                     onPressed: (){
-                                      setState(() {
-                                        confirmPasswordVisible=!confirmPasswordVisible;
-                                      });
+                                      //setState(() {
+                                        confirmPasswordVisible= cubit.changePasswordVisablity(confirmPasswordVisible);
+                                      //});
                                     },
                                   ),
                                   contentPadding: const EdgeInsets.only(
@@ -201,9 +213,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                               width: 250,
                               height: 40,
                               child: FloatingActionButton.extended(
-                                onPressed: () {},
+                                onPressed: () {
+                                   cubit.changePassword(
+                                       oldPassword:oldPasswordController.text,
+                                       newpassword: passwordController.text,
+                                       confirmPassword: confirmPasswordController.text);
+                                   print('hhhhhhhhhhhh');
+                                },
                                 label: Text(
-                                  "UPDATE",
+                                  "Change",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -220,6 +238,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               ],
             ),
           ),
-        ));
+        ));});
   }
 }
+

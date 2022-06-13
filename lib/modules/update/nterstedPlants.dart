@@ -136,8 +136,7 @@ class interstedPlants extends StatelessWidget {
                                   //cubit.getPlants();
                                   // cubit.InsertNewPlants(cubit.getMyInterstedPlants());
                                   AppCubit.Plants.clear();
-                                  List<Map<String, dynamic>> interestedPlants =
-                                      [];
+                                  List<Map<String, dynamic>> interestedPlants = [];
                                   cubit
                                       .getMyInterstedPlants()
                                       .forEach((element) {

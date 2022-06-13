@@ -2,29 +2,33 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
-import 'package:napta/modules/profile/profile.dart';
+import 'package:napta/modules/BottomNavigation/BottomNavigationScreen.dart';
 import 'package:napta/modules/register/RegisterScreen.dart';
-import 'package:napta/modules/update/nterstedPlants.dart';
 import 'package:napta/shared/cubit/cubit.dart';
 import 'package:napta/shared/cubit/states.dart';
 
 var emailController = TextEditingController();
 var passwordController = TextEditingController();
-
+var passwordVisible=true;
 class LoginScreen extends StatelessWidget {
   @override
-  var formkey = GlobalKey<FormState>();
-
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => AppCubit(),
       child: BlocConsumer<AppCubit, AppStates>(
           listener: (BuildContext context, AppStates state) {
-            AppCubit cubit = AppCubit.get(context);
             print('current stat in listener: $state');
-            if (state is UserLoginSuccess) {
+            AppCubit cubit = AppCubit.get(context);
+            if(state is UserLoginFailed){
+              print("Wrong Password or email");
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                      (Route<dynamic> route) => false);
+            }else if (state is UserLoginSuccess) {
               AppCubit.Token=UserLoginSuccess.token;
-
               cubit.getUserData();
             } else if (state is ProfileLoading) {
               AppCubit.userData = ProfileLoading.userData;
@@ -34,7 +38,7 @@ class LoginScreen extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Profile(),
+                    builder: (context) => BottomNavigationScreen(),
                   ),
                       (Route<dynamic> route) => false);
             }
@@ -76,13 +80,8 @@ class LoginScreen extends StatelessWidget {
                             height: 280,
                             width: 330,
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [Colors.green, Colors.white],
-                              ),
-                              border:
-                              Border.all(color: Colors.green[600], width: 2.0),
+                              color: Colors.white.withOpacity(0.5),
+                              border: Border.all(color: Colors.green[600], width: 2.0),
                               borderRadius: BorderRadius.circular(40),
                             ),
                             child: Form(
@@ -93,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                                       height: 50,
                                     ),
                                     Container(
-                                        width: 300.0,
+                                        width: 310.0,
                                         height: 35.0,
                                         child: TextFormField(
                                           controller: emailController,
@@ -108,18 +107,19 @@ class LoginScreen extends StatelessWidget {
                                                   BorderRadius.circular(25.0)),
                                               prefixIcon: Icon(Icons.email)),
                                           cursorColor: Colors.black,
+                                          style:TextStyle(fontSize:15 ),
                                         )),
                                     SizedBox(
                                       height: 40,
                                     ),
                                     Container(
-                                        width: 300.0,
+                                        width: 310.0,
                                         height: 40.0,
                                         child: TextFormField(
                                           controller: passwordController,
                                           keyboardType:
                                           TextInputType.visiblePassword,
-                                          obscureText: true,
+                                          obscureText:passwordVisible,
                                           decoration: InputDecoration(
                                             labelText: "Password",
                                             border: OutlineInputBorder(
@@ -130,12 +130,24 @@ class LoginScreen extends StatelessWidget {
                                                 BorderRadius.circular(25.0)),
                                             fillColor: Colors.white,
                                             prefixIcon: Icon(Icons.lock),
-                                            suffixIcon: Icon(Icons.remove_red_eye),
+                                            suffixIcon:IconButton(
+                                              icon:Icon(
+                                                  passwordVisible?Icons.visibility:Icons.visibility_off
+                                              ),
+                                              onPressed: (){
+
+                                                passwordVisible= cubit.changePasswordVisablity(passwordVisible);
+
+                                              },
+                                            ),
                                           ),
                                           cursorColor: Colors.black,
+                                          style:TextStyle(fontSize:15 ),
                                         )),
                                     FlatButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+
+                                      },
                                       child: Text("Forget Password!",
                                           style: TextStyle(
                                               color: Colors.deepOrange,
@@ -146,11 +158,12 @@ class LoginScreen extends StatelessWidget {
                                       height: 10,
                                     ),
                                     ConditionalBuilder(
-                                      condition: state is! UserLoginLoading,
+                                      condition: state is !UserLoginLoading,
                                       builder: (context) => Container(
                                           width: 150.0,
                                           child: MaterialButton(
                                             onPressed: () {
+                                              cubit.getPlans(1);
                                               print(emailController.text);
                                               print(passwordController.text);
                                               AppCubit.userName =
@@ -161,7 +174,6 @@ class LoginScreen extends StatelessWidget {
                                                   '${passwordController.text}');
                                               Plant plant =
                                               Plant(1, "Tomato", "imagepath");
-                                              print(plant.toJson());
                                             },
                                             color: Colors.green,
                                             shape: RoundedRectangleBorder(

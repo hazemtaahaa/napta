@@ -11,6 +11,7 @@ var firstNameController = TextEditingController();
 var lastNameController = TextEditingController();
 var phoneController = TextEditingController();
 
+
 class update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,8 @@ class update extends StatelessWidget {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Profile()));
               }
-            }, builder: (BuildContext context, AppStates state) {
+            },
+            builder: (BuildContext context, AppStates state) {
           if (state is AppIntialState) {
             firstNameController.text = AppCubit.userData.FirstName;
             lastNameController.text = AppCubit.userData.LastName;

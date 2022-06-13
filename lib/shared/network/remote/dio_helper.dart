@@ -35,13 +35,11 @@ class DioHelper {
   }
 
   static void initialize() {
-
     dreg = Dio(BaseOptions(
         baseUrl: 'https://5ra.azurewebsites.net/',
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
-          //'Authorization': 'bearer $Token'
         }));
   }
 
@@ -82,5 +80,12 @@ class DioHelper {
     @required List<Map<String, dynamic>> data,
   }) async {
     return await dio.post(url, data: data, queryParameters: query);
+  }
+
+  static Future<Response> getFertPlans({
+    @required String url,
+    //@required List<Map<String, dynamic>> query,
+  }) async {
+    return await dreg.get(url); //, queryParameters: query);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:napta/models/Fartlization/FartlizationModel.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
 import 'package:napta/models/user/loginModel.dart';
 import 'package:napta/modules/profile/profile.dart';
@@ -27,8 +28,17 @@ class AppCubit extends Cubit<AppStates> {
     _myInterstedPlants[index].plantStatus = states;
     emit(ChangePlantStates());
   }
+ String SelectNationality(
+   @required String SelectedNationality
+     ){
+    emit(SelectNationalityState());
+    return SelectedNationality;
+ }
 
-
+ bool changePasswordVisablity(bool state){
+    emit(PasswordVisibleState());
+    return !state;
+ }
 
   static List<MyInterstedPlants> _myInterstedPlants = [
     MyInterstedPlants(1, 'Tomato', false, "assets/images/tomato2.jpg"),
@@ -137,6 +147,27 @@ class AppCubit extends Cubit<AppStates> {
 
       emit(UserLoginSuccess(value.data['access_token'].toString()));
     }).catchError((error) {
+      emit(UserLoginFailed());
+      print(error.data.toString());
+    });
+  }
+
+
+  void changePassword({
+    @required String oldPassword,
+    @required String newpassword,
+    @required String confirmPassword,
+  }) {
+    DioHelper.put(url: 'api/accounts/changepassword', data: {
+      'oldPassword': oldPassword,
+      'NewPassword': newpassword,
+      'ConfirmPassword': confirmPassword
+    }).then((value) {
+      emit(PasswordChangedSuccessfully());
+      print('ddddddddddddddddddddddddd');
+
+      print(value.toString());
+    }).catchError((error) {
       print(error.data.toString());
     });
   }
@@ -158,6 +189,25 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
+  void getPlans(int plantID) {
+    DioHelper.initialize();
+    DioHelper.getFertPlans(
+      url: 'api/PlansDescription/FertPlans?id=$plantID',
+    ).then((value) {
+      List<dynamic> list = value.data;
+      print("Plaaaaaaaaaaaans");
+      List<Plan> plans = [];
+      list.forEach((element) {
+        plans.add(Plan.fromJson(element));
+        print('Week num : ${plans.last.FertQuntities.last.Quantity}');
+      });
+
+      //emit(ProfileLoadingSuccess(plants));
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
 }
 
 
@@ -174,4 +224,7 @@ class MyInterstedPlants {
     this.plantImage = plantImage;
     this.id = id;
   }
+
 }
+
+

@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
 import 'package:napta/models/user/loginModel.dart';
 import 'package:napta/modules/update/nterstedPlants.dart';
@@ -14,7 +15,9 @@ class Profile extends StatelessWidget {
   //Profile(this.plants);
   UserData userD;
   List<Plant> plants;
-
+  final ImagePicker _picker = ImagePicker();
+  XFile image;
+  XFile photo;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
@@ -103,8 +106,8 @@ class Profile extends StatelessWidget {
                                       //photo stack
                                       CircleAvatar(
                                         radius: 80,
-                                        backgroundImage: AssetImage(
-                                            "assets/images/HazemTaha.jpeg"), //avtar if my img
+                                        backgroundImage: AssetImage("assets/images/HazemTaha.jpeg"), //avtar if my img
+
                                       ),
 
                                       Container(
@@ -122,7 +125,13 @@ class Profile extends StatelessWidget {
                                         child: IconButton(
                                           icon: Icon(Icons.camera_alt_rounded),
                                           iconSize: 40,
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            // Pick an image
+                                            image = await _picker.pickImage(source: ImageSource.gallery);
+                                            // Capture a photo
+                                             photo = await _picker.pickImage(source: ImageSource.camera);
+
+                                          },
                                         ),
                                       ),
                                     ]),

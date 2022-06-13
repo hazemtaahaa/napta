@@ -16,6 +16,7 @@ class UserLoginSuccess extends AppStates{
    }
 
 }
+class UserLoginFailed extends AppStates{}
 class ProfileLoading extends AppStates{
 
   static UserData userData;
@@ -34,4 +35,8 @@ class InterestedPlantsUpdated extends AppStates{}
 
 class UserDataUpdated extends AppStates{}
 class RegisteredSuccessfully extends AppStates{}
+
+class SelectNationalityState extends AppStates{}
+class PasswordChangedSuccessfully extends AppStates{}
+class PasswordVisibleState extends AppStates{}
 

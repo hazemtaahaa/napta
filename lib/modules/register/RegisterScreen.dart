@@ -21,7 +21,6 @@ List<String> country = [
   "Germany"
 ];
 
-String f_name, l_name, E_Mail, phone, pass, confirm_pass;
 var firstNameController = TextEditingController();
 var lastNameController = TextEditingController();
 var phoneController = TextEditingController();
@@ -284,7 +283,7 @@ class RegisterScreen extends StatelessWidget {
                                 }).toList(),
                                 onChanged: (newValue) {
                                   // setState(() {
-                                  selectedValue = newValue;
+                                  selectedValue = cubit.SelectNationality(newValue);
                                   // });
                                 }),
                           ),
