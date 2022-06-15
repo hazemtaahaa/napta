@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             print('current stat in listener: $state');
             AppCubit cubit = AppCubit.get(context);
             if(state is UserLoginFailed){
-              print("Wrong Password or email");
+              print("Wrong Username or Password");
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
@@ -56,29 +56,23 @@ class LoginScreen extends StatelessWidget {
                   )),
               child: SingleChildScrollView(
                 child: Column(children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 80,
-                      ),
-                      Image(
-                        height: 140,
-                        width: 200,
-                        image: Image.asset("assets/images/NAPTA (1)_ccexpress.png")
-                            .image,
-                      )
-                    ],
+                  Center(
+                    child: Image(
+                      height: 140,
+                      width: 200,
+                      image: Image.asset("assets/images/NAPTA (1)_ccexpress.png").image,
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    padding: const EdgeInsets.all(20),
                     child: Container(
-                      height: 280,
+                      height: 350,
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
                           Container(
-                            height: 280,
-                            width: 330,
+                            height: 330,
+                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.5),
                               border: Border.all(color: Colors.green[600], width: 2.0),
@@ -92,8 +86,8 @@ class LoginScreen extends StatelessWidget {
                                       height: 50,
                                     ),
                                     Container(
-                                        width: 310.0,
-                                        height: 35.0,
+                                        width: 350.0,
+                                        height: 40.0,
                                         child: TextFormField(
                                           controller: emailController,
                                           keyboardType: TextInputType.emailAddress,
@@ -113,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                                       height: 40,
                                     ),
                                     Container(
-                                        width: 310.0,
+                                        width: 350.0,
                                         height: 40.0,
                                         child: TextFormField(
                                           controller: passwordController,
@@ -122,7 +116,9 @@ class LoginScreen extends StatelessWidget {
                                           obscureText:passwordVisible,
                                           decoration: InputDecoration(
                                             labelText: "Password",
+
                                             border: OutlineInputBorder(
+
                                                 borderSide: const BorderSide(
                                                     color: Colors.green,
                                                     width: 2.0),
@@ -151,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                                       child: Text("Forget Password!",
                                           style: TextStyle(
                                               color: Colors.deepOrange,
-                                              fontSize: 13,
+                                              fontSize: 15,
                                               fontFamily: 'Lato')),
                                     ),
                                     SizedBox(
@@ -160,22 +156,21 @@ class LoginScreen extends StatelessWidget {
                                     ConditionalBuilder(
                                       condition: state is !UserLoginLoading,
                                       builder: (context) => Container(
-                                          width: 150.0,
+                                          width: 200.0,
                                           child: MaterialButton(
                                             onPressed: () {
-                                              cubit.getPlans(1);
+                                             // cubit.getPlans(1);
                                               print(emailController.text);
                                               print(passwordController.text);
                                               AppCubit.userName =
                                                   emailController.text;
                                               cubit.userLogin(
                                                   email: '${emailController.text}',
-                                                  password:
-                                                  '${passwordController.text}');
+                                                  password: '${passwordController.text}');
                                               Plant plant =
                                               Plant(1, "Tomato", "imagepath");
                                             },
-                                            color: Colors.green,
+                                            color: Colors.green[900],
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius.circular(20)),
@@ -183,7 +178,7 @@ class LoginScreen extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontFamily: 'Lato',
-                                                    fontSize: 16)),
+                                                    fontSize: 20)),
                                           )),
                                       fallback: (context) => Center(
                                           child: CircularProgressIndicator()),
@@ -195,25 +190,25 @@ class LoginScreen extends StatelessWidget {
                           ),
 
                           /* Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 100,
-                          width: 150,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    AssetImage("assets/images/HassanNour.jpeg"),
-                              ),
-                            ],
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 150,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      AssetImage("assets/images/HassanNour.jpeg"),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ), */
+                        ],
+                      ),
+                    ), */
                         ],
                       ),
                     ),
@@ -222,26 +217,25 @@ class LoginScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Row(
+                    mainAxisAlignment:MainAxisAlignment.start ,
                     children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        height: 60,
-                        width: 70,
-                      ),
-                      Text(
-                        "First Time Here",
-                        style: TextStyle(
-                            color: Colors.black, fontSize: 15, fontFamily: 'Lato'),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 20, 10, 20),
+                        child: Text(
+                          "First Time Here",
+                          style: TextStyle(
+                              color: Colors.black, fontSize: 17, fontFamily: 'Lato'),
+                        ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 8, 8, 8),
+                    padding: const EdgeInsets.fromLTRB(25, 8, 25, 8),
                     child: Text(
                       "This application will help you in caring for plants, through which you will be able to know the pest in your plant and the way to treat it, you can know the amount of fertilizer on your land.                                                   "
                           "community that suits your interestes",
                       style: TextStyle(
-                          color: Colors.black38, fontSize: 13, fontFamily: 'Lato'),
+                          color: Colors.black54, fontSize: 13 , fontFamily: 'Lato'),
                     ),
                   ),
                   SizedBox(
@@ -260,11 +254,11 @@ class LoginScreen extends StatelessWidget {
                                   builder: (context) => RegisterScreen()),
                             );
                           },
-                          color: Colors.green,
+                          color: Colors.green[900],
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           child: Text("Register",
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(color: Colors.white,fontSize: 20,fontFamily: 'Lato' )),
                         )),
                   )
                 ]),

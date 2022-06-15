@@ -28,17 +28,32 @@ class AppCubit extends Cubit<AppStates> {
     _myInterstedPlants[index].plantStatus = states;
     emit(ChangePlantStates());
   }
- String SelectNationality(
-   @required String SelectedNationality
-     ){
+
+  int incrementCounter() {
+    emit(IncrementState());
+   counter++;
+
+  }
+  int decrementCounter() {
+    // setState(() {
+    emit(DecrementState());
+   if(counter>1)
+    counter--;
+    // });
+  }
+String selectPlant(String s){
+    emit(SelectPlantState());
+    return s;
+  }
+  String SelectNationality(@required String SelectedNationality) {
     emit(SelectNationalityState());
     return SelectedNationality;
- }
+  }
 
- bool changePasswordVisablity(bool state){
+  bool changePasswordVisablity(bool state) {
     emit(PasswordVisibleState());
     return !state;
- }
+  }
 
   static List<MyInterstedPlants> _myInterstedPlants = [
     MyInterstedPlants(1, 'Tomato', false, "assets/images/tomato2.jpg"),
@@ -49,14 +64,17 @@ class AppCubit extends Cubit<AppStates> {
     MyInterstedPlants(9, 'Squash', false, ("assets/images/Squash.jpg")),
     MyInterstedPlants(10, 'Potato', false, ("assets/images/Potato.jpg")),
     MyInterstedPlants(11, 'Corn', false, ("assets/images/Corn_(maize).jpg")),
-    MyInterstedPlants(12, 'Strawberry', false, ("assets/images/Strawberry.jpg")),
+    MyInterstedPlants(
+        12, 'Strawberry', false, ("assets/images/Strawberry.jpg")),
     MyInterstedPlants(13, 'Peach', false, ("assets/images/Peach.jpg")),
     MyInterstedPlants(14, 'Blueberry', false, ("assets/images/Blueberry.jpg")),
-    MyInterstedPlants(15, 'Cherry', false, ("assets/images/Cherry_(including_sour).jpg")),
+    MyInterstedPlants(
+        15, 'Cherry', false, ("assets/images/Cherry_(including_sour).jpg")),
     MyInterstedPlants(16, 'Pepper', false, ("assets/images/Pepper.jpg")),
     MyInterstedPlants(17, 'Raspberry', false, ("assets/images/Raspberry.jpg")),
   ];
 
+static  int counter =1;
   // void getPlants() {
   //   DioHelper.getData(url: '/api/plants', query: null).then((value) {
   //     //print(value.data.toString());
@@ -71,7 +89,7 @@ class AppCubit extends Cubit<AppStates> {
   static List<Plant> Plants = [];
   static UserData userData;
   static String Token;
-
+  static List<Plan> plans = [];
 
   void getPlants() {
     DioHelper.getData(
@@ -91,13 +109,10 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-
-  void postPlants(
-      {@required List<Map<String, dynamic>> plants}) {
+  void postPlants({@required List<Map<String, dynamic>> plants}) {
     DioHelper.postPlant(
-        url: 'api/userplants/addlist?email=$userName',
-        data:plants
-    ).then((value) {
+            url: 'api/userplants/addlist?email=$userName', data: plants)
+        .then((value) {
       print(value.toString());
       emit(InterestedPlantsUpdated());
     }).catchError((error) {
@@ -105,11 +120,10 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void putUser(
-      {@required Map<String, dynamic> User}) {
+  void putUser({@required Map<String, dynamic> User}) {
     DioHelper.put(
       url: 'api/Users/update',
-      data:User,
+      data: User,
     ).then((value) {
       print(value.toString());
       emit(UserDataUpdated());
@@ -118,15 +132,11 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void postUser(
-      {@required Map<String, dynamic> User}) {
+  void postUser({@required Map<String, dynamic> User}) {
     print('Post user data is  : $User');
     DioHelper.initialize();
-    DioHelper.postUser(
-        url: 'api/accounts/register',
-        data:User,
-        query: null
-    ).then((value) {
+    DioHelper.postUser(url: 'api/accounts/register', data: User, query: null)
+        .then((value) {
       print(value.toString());
       emit(RegisteredSuccessfully());
     }).catchError((error) {
@@ -134,9 +144,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void userLogin({
-    @required String email,
-    @required String password,
+  void userLogin({ @required String email, @required String password,
   }) {
     emit(UserLoginLoading());
     DioHelper.postData(url: 'login', data: {
@@ -144,7 +152,7 @@ class AppCubit extends Cubit<AppStates> {
       'password': password,
       'grant_type': 'password'
     }).then((value) {
-
+      print(value.toString());
       emit(UserLoginSuccess(value.data['access_token'].toString()));
     }).catchError((error) {
       emit(UserLoginFailed());
@@ -152,11 +160,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-
-  void changePassword({
-    @required String oldPassword,
-    @required String newpassword,
-    @required String confirmPassword,
+  void changePassword({@required String oldPassword, @required String newpassword, @required String confirmPassword,
   }) {
     DioHelper.put(url: 'api/accounts/changepassword', data: {
       'oldPassword': oldPassword,
@@ -184,33 +188,54 @@ class AppCubit extends Cubit<AppStates> {
       UserData userData;
       userData = UserData.fromJson(value.data);
       emit(ProfileLoading(userData));
-      // emit(ProfileLoadingSuccess());
+      //emit(ProfileLoadingSuccess());
     }).catchError((error) {
       print(error.toString());
     });
   }
+
   void getPlans(int plantID) {
+    plans.clear();
     DioHelper.initialize();
     DioHelper.getFertPlans(
       url: 'api/PlansDescription/FertPlans?id=$plantID',
     ).then((value) {
       List<dynamic> list = value.data;
       print("Plaaaaaaaaaaaans");
-      List<Plan> plans = [];
+
       list.forEach((element) {
         plans.add(Plan.fromJson(element));
         print('Week num : ${plans.last.FertQuntities.last.Quantity}');
       });
-
-      //emit(ProfileLoadingSuccess(plants));
+      print('FertPLaaaan:  ${value.data.toString()}');
+      emit(PlansSuccessState());
     }).catchError((error) {
       print(error.toString());
     });
   }
 
+
+  void getPost() {
+    DioHelper.getData(
+      url: 'api/Posts',
+    ).then((value) {
+      List<dynamic> list = value.data;
+      print("Plaaaaaaaaaaaans");
+
+      list.forEach((element) {
+        plans.add(Plan.fromJson(element));
+        print('Week num : ${plans.last.FertQuntities.last.Quantity}');
+      });
+      print('FertPLaaaan:  ${value.data.toString()}');
+      emit(PlansSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+
+
 }
-
-
 
 class MyInterstedPlants {
   String plantName;
@@ -224,7 +249,4 @@ class MyInterstedPlants {
     this.plantImage = plantImage;
     this.id = id;
   }
-
 }
-
-

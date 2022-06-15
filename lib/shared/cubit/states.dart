@@ -39,4 +39,7 @@ class RegisteredSuccessfully extends AppStates{}
 class SelectNationalityState extends AppStates{}
 class PasswordChangedSuccessfully extends AppStates{}
 class PasswordVisibleState extends AppStates{}
-
+class IncrementState extends AppStates{}
+class DecrementState extends AppStates{}
+class SelectPlantState extends AppStates{}
+class PlansSuccessState extends AppStates{}
