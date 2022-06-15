@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:napta/modules/calcolatur/FertilizationPlantMOre.dart';
@@ -53,7 +55,7 @@ class CalculatorScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          FertilizationPlant()),
+                          FertilizationPlant(plantsID[_selectedPlant] )),
                 );
               }
           print('State in listener : $state');
@@ -67,7 +69,9 @@ class CalculatorScreen extends StatelessWidget {
               image: Image.asset("assets/images/backgtound.png").image,
               fit: BoxFit.fill,
             )),
-            child: Column(children: [
+            child: Column(
+                mainAxisAlignment:MainAxisAlignment.center,
+                children: [
               Center(
                 child: Image(
                   height: 140,
@@ -113,31 +117,38 @@ class CalculatorScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    hint: Text(
-                                      "Select Plant",
-                                      style: TextStyle(
-                                          fontFamily: 'Lato',
-                                          color: Colors.blueAccent),
-                                    ),
-                                    value: _selectedPlant,
-                                    items: _plantList.map((item) {
-                                      return DropdownMenuItem(
-                                        child: Text(
-                                          item,
-                                          style: TextStyle(
-                                              letterSpacing: 1, fontSize: 17),
-                                        ),
-                                        value: item,
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      // setState(() {
-                                      _selectedPlant =
-                                          cubit.selectPlant(newValue);
-                                      // });
-                                    }),
+                                Container(
+                                  height: 50,
+                                  width: 150,
+                                  child: DropdownButton(
+                                    elevation: 8,
+                                        iconSize:35,
+                                         icon:Icon(Icons.arrow_drop_down_circle,color:Colors.green[800],),
+                                      dropdownColor: Colors.white,
+                                      hint: Text(
+                                        "Select Plant",
+                                        style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            color: Colors.blueAccent),
+                                      ),
+                                      value: _selectedPlant,
+                                      items: _plantList.map((item) {
+                                        return DropdownMenuItem(
+                                          child: Text(
+                                            item,
+                                            style: TextStyle(
+                                                letterSpacing: 1, fontSize: 17),
+                                          ),
+                                          value: item,
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        // setState(() {
+                                        _selectedPlant =
+                                            cubit.selectPlant(newValue);
+                                        // });
+                                      }),
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -202,8 +213,8 @@ class CalculatorScreen extends StatelessWidget {
                                 ),
                                 backgroundColor: Colors.green[900],
                                 onPressed: () {
-                                  print(
-                                      'PlaaaaaaaaaaaaaaantIDDDDDDDD ${plantsID[_selectedPlant]}');
+                                  // print(
+                                  //     'PlaaaaaaaaaaaaaaantIDDDDDDDD ${plantsID[_selectedPlant]}');
                                   cubit.getPlans(plantsID[_selectedPlant]);
 
                                 },

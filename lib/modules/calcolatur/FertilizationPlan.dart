@@ -7,6 +7,13 @@ import 'FertilizationPlantMOre.dart';
 
 class FertilizationPlant extends StatelessWidget {
   static const routeName = "Fertillization_Plant";
+ int plantsID=0;
+  FertilizationPlant(int plantsID){
+    if(plantsID<=3)
+    this.plantsID= plantsID-1;
+    else this.plantsID= plantsID-4;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +32,13 @@ class FertilizationPlant extends StatelessWidget {
               fit: BoxFit.fill,
             )),
             child: Column(children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 80,
-                  ),
-                  Image(
-                    height: 140,
-                    width: 200,
-                    image: Image.asset("assets/images/NAPTA (1)_ccexpress.png")
-                        .image,
-                  )
-                ],
+              Center(
+                child: Image(
+                  height: 160,
+                  width: 200,
+                  image: Image.asset("assets/images/NAPTA (1)_ccexpress.png")
+                      .image,
+                ),
               ),
               Container(
                 height: 560,
@@ -46,7 +48,7 @@ class FertilizationPlant extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
-                        height: 495,
+                        height: 500,
                         //width: 330,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.5),
@@ -67,13 +69,13 @@ class FertilizationPlant extends StatelessWidget {
                                 CircleAvatar(
                                   radius: 30,
                                   backgroundImage:
-                                      AssetImage("assets/images/Potato.jpg"),
+                                      AssetImage('${cubit.getMyInterstedPlants()[plantsID].plantImage}'),
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "Potatoes Fertilization Plan",
+                                  "${cubit.getMyInterstedPlants()[plantsID].plantName} Fertilization Plan",
                                   style: TextStyle(
                                     fontFamily: 'Lato',
                                     fontSize: 18,
@@ -87,7 +89,7 @@ class FertilizationPlant extends StatelessWidget {
                               height: 10,
                             ),
                             Container(
-                              height: 400,
+                              height: 350,
                               //  width: 300,
                               child: Stack(
                                 alignment: Alignment.topCenter,
@@ -95,10 +97,9 @@ class FertilizationPlant extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Container(
-
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        color: Colors.white,
+                                        color: Colors.grey[300],
                                       ),
                                       child:  Column(
                                         children: [
@@ -111,13 +112,10 @@ class FertilizationPlant extends StatelessWidget {
                                               fontFamily: 'Lato',
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-
                                           Container(
-                                            height: 300,
+                                            height: 290,
                                             child: ListView.separated(
+                                              physics: BouncingScrollPhysics(),
                                               itemCount: AppCubit.plans.length,
                                               itemBuilder:(context,index)=>Column(
                                                 children: [
@@ -220,45 +218,49 @@ class FertilizationPlant extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton(
-                                        child: Text(
-                                          "Ok",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'Lato'),
-                                        ),
-                                        onPressed: () =>   Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => CalculatorScreen(),
-                                            ),
-                                                (Route<dynamic> route) => false)
-                                        ,
-                                        style: ButtonStyle(
-                                            padding: MaterialStateProperty.all(
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 50)),
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.green[900]),
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25),
-                                            ))),
-                                      ),
-                                    ],
-                                  ),
+
                                 ],
                               ),
                             ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                  child: Text(
+                                    "Ok",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Lato'),
+                                  ),
+                                  onPressed: () =>   Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => CalculatorScreen(),
+                                      ),
+                                          (Route<dynamic> route) => false)
+                                  ,
+                                  style: ButtonStyle(
+                                      padding: MaterialStateProperty.all(
+                                          EdgeInsets.symmetric(
+                                              horizontal: 50)),
+                                      backgroundColor:
+                                      MaterialStateProperty.all(
+                                          Colors.green[900]),
+                                      shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(25),
+                                          ))),
+                                ),
+                              ],
+                            ),
                           ],
+
                         ),
                       ),
+
                     ),
+
                   ],
                 ),
               ),

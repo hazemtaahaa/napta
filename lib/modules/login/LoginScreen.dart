@@ -6,7 +6,6 @@ import 'package:napta/modules/BottomNavigation/BottomNavigationScreen.dart';
 import 'package:napta/modules/register/RegisterScreen.dart';
 import 'package:napta/shared/cubit/cubit.dart';
 import 'package:napta/shared/cubit/states.dart';
-
 var emailController = TextEditingController();
 var passwordController = TextEditingController();
 var passwordVisible=true;
@@ -20,6 +19,7 @@ class LoginScreen extends StatelessWidget {
             print('current stat in listener: $state');
             AppCubit cubit = AppCubit.get(context);
             if(state is UserLoginFailed){
+
               print("Wrong Username or Password");
               Navigator.pushAndRemoveUntil(
                   context,
