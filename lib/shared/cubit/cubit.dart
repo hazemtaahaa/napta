@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:napta/models/Fartlization/FartlizationModel.dart';
+import 'package:napta/models/PostModel/PostModel.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
 import 'package:napta/models/user/loginModel.dart';
-import 'package:napta/modules/profile/profile.dart';
-import 'package:napta/modules/update/nterstedPlants.dart';
 import 'package:napta/shared/cubit/states.dart';
 import 'package:napta/shared/network/remote/dio_helper.dart';
+
+
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppIntialState());
@@ -15,12 +19,10 @@ class AppCubit extends Cubit<AppStates> {
   static AppCubit get(context) => BlocProvider.of(context);
 
   List<MyInterstedPlants> getMyInterstedPlants() {
-    //emit(GetListState());
     return _myInterstedPlants;
   }
 
   static List<MyInterstedPlants> gettttttttttttttttttMyInterstedPlants() {
-    //emit(GetListState());
     return _myInterstedPlants;
   }
 
@@ -35,16 +37,15 @@ class AppCubit extends Cubit<AppStates> {
 
   }
   int decrementCounter() {
-    // setState(() {
     emit(DecrementState());
    if(counter>1)
     counter--;
-    // });
   }
 String selectPlant(String s){
     emit(SelectPlantState());
     return s;
   }
+
   String SelectNationality(@required String SelectedNationality) {
     emit(SelectNationalityState());
     return SelectedNationality;
@@ -52,6 +53,10 @@ String selectPlant(String s){
 
   bool changePasswordVisablity(bool state) {
     emit(PasswordVisibleState());
+    return !state;
+  }
+  bool likeISPressed(bool state){
+    emit(LikeIsPressedState());
     return !state;
   }
 
@@ -87,6 +92,7 @@ static  int counter =1;
   // }
   static String userName;
   static List<Plant> Plants = [];
+  static List<Post> Posts = [];
   static UserData userData;
   static String Token;
   static List<Plan> plans = [];
@@ -143,6 +149,19 @@ static  int counter =1;
       print(error.toString());
     });
   }
+  void postPost({@required Map<String, dynamic> Post}) {
+    print('Post Content is  : $Post');
+    DioHelper.DoSomething();
+    DioHelper.postPost(url: 'api/Posts?email=$userName', data:Post, query:null)
+        .then((value) {
+          print("Post Created DONE");
+      print(value.toString());
+      emit(PostCreatedSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
 
   void userLogin({ @required String email, @required String password,
   }) {
@@ -175,6 +194,8 @@ static  int counter =1;
       print(error.data.toString());
     });
   }
+
+
 
   void getUserData() {
     DioHelper.Token = Token;
@@ -215,22 +236,38 @@ static  int counter =1;
   }
 
 
-  void getPost() {
+  void getPosts() {
+    DioHelper.DoSomething();
     DioHelper.getData(
-      url: 'api/Posts',
+      url: 'api/Posts/AllPosts?email=${AppCubit.userName}',
     ).then((value) {
       List<dynamic> list = value.data;
-      print("Plaaaaaaaaaaaans");
-
+      List<Post> posts = [];
       list.forEach((element) {
-        plans.add(Plan.fromJson(element));
-        print('Week num : ${plans.last.FertQuntities.last.Quantity}');
+        posts.add(Post.fromJson(element));
+        print('${posts.last.PostId} ${posts.last.NumberOfLikes}');
       });
-      print('FertPLaaaan:  ${value.data.toString()}');
-      emit(PlansSuccessState());
+      emit(GetPostsSuccessfullyState(posts));
     }).catchError((error) {
       print(error.toString());
     });
+  }
+
+   static File profileImage;
+  var picker = ImagePicker();
+  void pickProfileImage() async {
+    final pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      debugPrint(pickedFile.path);
+      emit(PostImagePickedSuccess());
+    } else {
+      debugPrint('No image selected.');
+      emit(PostImagePickedError());
+    }
   }
 
 

@@ -11,7 +11,6 @@ class Plant {
 
   Plant.fromJson(Map<String, dynamic> json) {
     Id = json['ID'];
-    print('Jsoooon ${json['ID']}');
     Name = json['Name'];
     ImagePath = json['ImagePath'];
   }

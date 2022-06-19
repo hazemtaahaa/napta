@@ -42,14 +42,15 @@ class ChangePassword extends StatelessWidget  {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 700,
+                  height: 500,
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
                       Container(
-                        height: 600,
+                        height: 450,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.5),
                           border: Border.all(
@@ -79,7 +80,7 @@ class ChangePassword extends StatelessWidget  {
                                   ),
                                 ),
                               ]),
-                            ), //السيركل افاتار
+                            ),
                             Text(
                             "${AppCubit.userData.FirstName} ${AppCubit.userData.LastName}" ,
                               style: TextStyle(

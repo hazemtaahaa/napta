@@ -1,3 +1,4 @@
+import 'package:napta/models/PostModel/PostModel.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
 import 'package:napta/models/user/loginModel.dart';
 
@@ -43,3 +44,14 @@ class IncrementState extends AppStates{}
 class DecrementState extends AppStates{}
 class SelectPlantState extends AppStates{}
 class PlansSuccessState extends AppStates{}
+class PostImagePickedSuccess extends AppStates{}
+class PostImagePickedError extends AppStates{}
+class  GetPostsSuccessfullyState extends AppStates{
+  static List<Post> posts;
+  GetPostsSuccessfullyState(List<Post> theposts){
+    posts=theposts;
+  }
+
+}
+class LikeIsPressedState extends AppStates{}
+class PostCreatedSuccessState extends AppStates{}

@@ -16,6 +16,7 @@ class DioHelper {
     //     headers: {'Content-Type': 'application/json',
     //       'Authorization':'bearer SBeFfsaqPBS8CeEAfWMiL1iYKJJXqXFbGt56whSgchxknHLrc7PHGRaYWG1J0rZ4nJeBzIoGVWXUqAKkuhzS-cF5658d6N5asUJ1GEQHljOtY2NkaG08Eg-JLy912xLKD5kmLr47yH-B9J64XHazRFONDbH0_dxLWR4xcv_2YUiReaNPJLspSCjmoiADkS8E6kObI9aqh_rSzBDWtHZTHwYcX5uiYIHbpJhF4pr-sblT2C9LhjChvQqSNjqK_HbUM2HThiAgqSe5mwA63Yl-CzmirTgOCjXcFLVR9Gfuqbf30_k9ebGMlen40pDDxNYGtPwf8MMuK32_z21VyYg89rO6pog2Ccs9ps4GfGxG3Sk'
     //     }));
+    
     diolog = Dio(BaseOptions(
         baseUrl: 'https://5ra.azurewebsites.net/',
         receiveDataWhenStatusError: true,
@@ -87,5 +88,13 @@ class DioHelper {
     //@required List<Map<String, dynamic>> query,
   }) async {
     return await dreg.get(url); //, queryParameters: query);
+  }
+
+  static Future<Response> postPost({
+    @required String url,
+    dynamic query,
+    @required Map<String, dynamic> data,
+  }) async {
+    return await dio.post(url, data: data, queryParameters: query);
   }
 }

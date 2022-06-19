@@ -19,7 +19,6 @@ class LoginScreen extends StatelessWidget {
             print('current stat in listener: $state');
             AppCubit cubit = AppCubit.get(context);
             if(state is UserLoginFailed){
-
               print("Wrong Username or Password");
               Navigator.pushAndRemoveUntil(
                   context,
@@ -27,13 +26,20 @@ class LoginScreen extends StatelessWidget {
                     builder: (context) => LoginScreen(),
                   ),
                       (Route<dynamic> route) => false);
-            }else if (state is UserLoginSuccess) {
+            }
+            else if (state is UserLoginSuccess) {
               AppCubit.Token=UserLoginSuccess.token;
+              cubit.getPosts();
+            }
+            else if(state is GetPostsSuccessfullyState){
+              AppCubit.Posts=GetPostsSuccessfullyState.posts;
               cubit.getUserData();
-            } else if (state is ProfileLoading) {
+            }
+            else if (state is ProfileLoading) {
               AppCubit.userData = ProfileLoading.userData;
               cubit.getPlants();
-            } else if (state is ProfileLoadingSuccess) {
+            }
+            else if (state is ProfileLoadingSuccess) {
               AppCubit.Plants = ProfileLoadingSuccess.plants;
               Navigator.pushAndRemoveUntil(
                   context,
@@ -42,7 +48,8 @@ class LoginScreen extends StatelessWidget {
                   ),
                       (Route<dynamic> route) => false);
             }
-          }, builder: (BuildContext context, AppStates state) {
+          },
+          builder: (BuildContext context, AppStates state) {
 
         AppCubit cubit = AppCubit.get(context);
         print('current stat in builder: $state');

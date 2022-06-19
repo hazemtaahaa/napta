@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
+import 'package:napta/modules/BottomNavigation/BottomNavigationScreen.dart';
 import 'package:napta/modules/profile/profile.dart';
 import 'package:napta/shared/cubit/cubit.dart';
 import 'package:napta/shared/cubit/states.dart';
@@ -153,7 +154,7 @@ class interstedPlants extends StatelessWidget {
                                   cubit.postPlants(plants: interestedPlants);
                                   print(interestedPlants.last);
                                   Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>Profile())
+                                  MaterialPageRoute(builder: (context)=>BottomNavigationScreen())
 
                                   );
                                 },

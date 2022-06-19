@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:napta/models/user/loginModel.dart';
+import 'package:napta/modules/BottomNavigation/BottomNavigationScreen.dart';
 import 'package:napta/modules/profile/profile.dart';
 import 'package:napta/modules/update/ChangePassword.dart';
 import 'package:napta/shared/cubit/cubit.dart';
@@ -29,7 +30,7 @@ class update extends StatelessWidget {
                 print('user data profile loadinnngngngngnggng');
 
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Profile()));
+                    context, MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
               }
             },
             builder: (BuildContext context, AppStates state) {

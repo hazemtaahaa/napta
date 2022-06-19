@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,7 @@ class Profile extends StatelessWidget {
   UserData userD;
   List<Plant> plants;
   final ImagePicker _picker = ImagePicker();
-  XFile image;
+  File image;
   XFile photo;
   @override
   Widget build(BuildContext context) {
@@ -51,35 +53,19 @@ class Profile extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        height: 100,
-                        width: 50,
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.settings,
-                              size: 40,
-                            ),
-                            onPressed: () {}),
-                      ),
-                      SizedBox(
-                        width: 70,
-                      ),
-                      Image(
-                        alignment: Alignment.topCenter,
-                        height: 150,
-                        width: 200, //Napta_img
-                        image:
-                            Image.asset("assets/images/NAPTA (1)_ccexpress.png")
-                                .image,
-                      ),
-                      //1
-                    ],
-                  ),
+              Center(
+                child: Image(
+                  alignment: Alignment.topCenter,
+                  height: 150,
+                  width: 200, //Napta_img
+                  image:
+                  Image.asset("assets/images/NAPTA (1)_ccexpress.png")
+                      .image,
+                ),
+              ),
                   Container(
                     height: 420,
                     child: Stack(
@@ -104,12 +90,22 @@ class Profile extends StatelessWidget {
                                     alignment: Alignment.center,
                                     children: [
                                       //photo stack
+                                      if(AppCubit.profileImage != null)
                                       CircleAvatar(
                                         radius: 80,
-                                        backgroundImage: AssetImage("assets/images/HazemTaha.jpeg"), //avtar if my img
-
+                                        backgroundImage:Image.file(
+                                          AppCubit.profileImage,
+                                          width: double.infinity,
+                                          height: 230.0,
+                                          fit: BoxFit.cover,
+                                        ).image, //avtar if my img
                                       ),
-
+                                      if(AppCubit.profileImage == null)
+                                        CircleAvatar(
+                                          radius: 80,
+                                          backgroundImage:
+                                          AssetImage("assets/images/HazemTaha.jpeg"), //avtar if my img
+                                        ),
                                       Container(
                                         height: 180,
                                         width: 180,
@@ -125,12 +121,8 @@ class Profile extends StatelessWidget {
                                         child: IconButton(
                                           icon: Icon(Icons.camera_alt_rounded),
                                           iconSize: 40,
-                                          onPressed: () async {
-                                            // Pick an image
-                                            image = await _picker.pickImage(source: ImageSource.gallery);
-                                            // Capture a photo
-                                             photo = await _picker.pickImage(source: ImageSource.camera);
-
+                                          onPressed: ()  {
+                                            AppCubit.get(context).pickProfileImage();
                                           },
                                         ),
                                       ),

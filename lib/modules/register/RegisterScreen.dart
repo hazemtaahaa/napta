@@ -39,34 +39,193 @@ class RegisterScreen extends StatelessWidget {
           AppCubit cubit = AppCubit.get(context);
           return Scaffold(
               body: Container(
-                  constraints: BoxConstraints.expand(),
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/backgtound.png"),
-                          fit: BoxFit.fill)),
-                  child: SingleChildScrollView(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 350.0,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Container(
-                                        width: 160.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          controller: firstNameController,
-                                          keyboardType: TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                              labelText: "First Name",
+            height: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: Image.asset("assets/images/backgtound.png").image,
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 600,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 500,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.5),
+                        border: Border.all(color: Colors.green[600], width: 1.7),
+                        borderRadius: BorderRadius.circular(40), //Card
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Register",
+                              style: TextStyle(
+                                letterSpacing:1.5,
+                                  fontSize: 23
+                              ),),
+                            SizedBox(height: 20,),
+                            Container(
+                                width: 430.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+
+                                      Container(
+                                          width: 160.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            controller: firstNameController,
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            decoration: InputDecoration(
+                                                labelText: "First Name",
+                                                labelStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato'),
+                                                border: OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                        color: Colors.green,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.0)),
+                                                fillColor: Colors.black,
+                                                prefixIcon: Icon(
+                                                  Icons.person,
+                                                  color: Colors.black,
+                                                )),
+                                            cursorColor: Colors.black,
+                                          )),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Container(
+                                          width: 160.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            controller: lastNameController,
+                                            decoration: InputDecoration(
+                                                labelText: "Last Name",
+                                                labelStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato'),
+                                                border: OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                        color: Colors.green,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.0)),
+                                                fillColor: Colors.black,
+                                                prefixIcon: Icon(Icons.person)),
+                                            cursorColor: Colors.black,
+                                          )),
+                                    ])),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                                width: double.infinity,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                      Container(
+                                          width: 330.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            controller: emailController,
+                                            decoration: InputDecoration(
+                                                labelText: "E-Mail",
+                                                labelStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato'),
+                                                border: OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                        color: Colors.green,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.0)),
+                                                fillColor: Colors.black,
+                                                prefixIcon: Icon(Icons.mail)),
+                                            cursorColor: Colors.black,
+                                          )),
+                                    ])),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                                width: 430.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                      Container(
+                                          width: 330.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            controller: phoneController,
+                                            decoration: InputDecoration(
+                                                labelText: "Phone",
+                                                labelStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Lato'),
+                                                border: OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                        color: Colors.green,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25.0)),
+                                                fillColor: Colors.black,
+                                                prefixIcon: Icon(Icons.phone)),
+                                            cursorColor: Colors.black,
+                                          )),
+                                    ])),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                                width: 430.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                      Container(
+                                          width: 330.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
+                                            controller: passwordController,
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: "Password",
                                               labelStyle: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 12,
@@ -76,269 +235,146 @@ class RegisterScreen extends StatelessWidget {
                                                       color: Colors.green,
                                                       width: 2.0),
                                                   borderRadius:
-                                                  BorderRadius.circular(25.0)),
-                                              fillColor: Colors.black,
-                                              prefixIcon: Icon(
-                                                Icons.person,
-                                                color: Colors.black,
-                                              )),
-                                          cursorColor: Colors.black,
-                                        )),
-                                    SizedBox(
-                                      width: 10.0,
-                                    ),
-                                    Container(
-                                        width: 160.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.emailAddress,
-                                          controller:lastNameController,
-                                          decoration: InputDecoration(
-                                              labelText: "Last Name",
-                                              labelStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontFamily: 'Lato'),
-                                              border: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.green,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                  BorderRadius.circular(25.0)),
-                                              fillColor: Colors.black,
-                                              prefixIcon: Icon(Icons.person)),
-                                          cursorColor: Colors.black,
-                                        )),
-                                  ])),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Container(
-                                        width: 330.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.emailAddress,
-                                          controller:emailController,
-                                          decoration: InputDecoration(
-                                              labelText: "E-Mail",
-                                              labelStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontFamily: 'Lato'),
-                                              border: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.green,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                  BorderRadius.circular(25.0)),
-                                              fillColor: Colors.black,
-                                              prefixIcon: Icon(Icons.mail)),
-                                          cursorColor: Colors.black,
-                                        )),
-                                  ])),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Container(
-                                        width: 330.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.emailAddress,
-                                          controller:phoneController,
-                                          decoration: InputDecoration(
-                                              labelText: "Phone",
-                                              labelStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontFamily: 'Lato'),
-                                              border: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                      color: Colors.green,
-                                                      width: 2.0),
-                                                  borderRadius:
-                                                  BorderRadius.circular(25.0)),
-                                              fillColor: Colors.black,
-                                              prefixIcon: Icon(Icons.phone)),
-                                          cursorColor: Colors.black,
-                                        )),
-                                  ])),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Container(
-                                        width: 330.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType
-                                              .visiblePassword,
-                                          controller:passwordController,
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            labelText: "Password",
-                                            labelStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontFamily: 'Lato'),
-                                            border: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    color: Colors.green,
-                                                    width: 2.0),
-                                                borderRadius:
-                                                BorderRadius.circular(25.0)),
-                                            fillColor: Colors.white,
-                                            prefixIcon: Icon(Icons.lock),
-                                            suffixIcon: Icon(Icons.remove_red_eye),
-                                          ),
-                                          cursorColor: Colors.black,
-                                        )),
-                                  ])),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 15.0,
-                                    ),
-                                    Container(
-                                        width: 330.0,
-                                        height: 35.0,
-                                        child: TextFormField(
-                                          keyboardType: TextInputType
-                                              .visiblePassword,
-                                          controller:confirmPasswordController,
-                                          obscureText: true,
-                                          decoration: InputDecoration(
-                                            labelText: "Confirm Password",
-                                            labelStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 12,
-                                                fontFamily: 'Lato'),
-                                            border: OutlineInputBorder(
-                                                borderSide: const BorderSide(
-                                                    color: Colors.green,
-                                                    width: 2.0),
-                                                borderRadius:
-                                                BorderRadius.circular(25.0)),
-                                            fillColor: Colors.white,
-                                            prefixIcon: Icon(Icons.lock),
-                                            suffixIcon: Icon(
-                                              Icons.remove_red_eye,
+                                                      BorderRadius.circular(25.0)),
+                                              fillColor: Colors.white,
+                                              prefixIcon: Icon(Icons.lock),
+                                              suffixIcon:
+                                                  Icon(Icons.remove_red_eye),
                                             ),
-                                          ),
-                                          cursorColor: Colors.black,
-                                        )),
-                                  ])),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(100, 0, 0, 0),
-                            child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                hint: Text(
-                                  "Select Nationality",
-                                  style: TextStyle(
-                                      fontFamily: 'Lato', color: Colors.deepOrange),
-                                ),
-                                value: selectedValue,
-                                items: country.map((item) {
-                                  return DropdownMenuItem(
-                                    child: Text(
-                                      item,
+                                            cursorColor: Colors.black,
+                                          )),
+                                    ])),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                                width: 430.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 15.0,
+                                      ),
+                                      Container(
+                                          width: 330.0,
+                                          height: 35.0,
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
+                                            controller: confirmPasswordController,
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: "Confirm Password",
+                                              labelStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Lato'),
+                                              border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: Colors.green,
+                                                      width: 2.0),
+                                                  borderRadius:
+                                                      BorderRadius.circular(25.0)),
+                                              fillColor: Colors.white,
+                                              prefixIcon: Icon(Icons.lock),
+                                              suffixIcon: Icon(
+                                                Icons.remove_red_eye,
+                                              ),
+                                            ),
+                                            cursorColor: Colors.black,
+                                          )),
+                                    ])),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    hint: Text(
+                                      "Select Nationality",
                                       style: TextStyle(
                                           fontFamily: 'Lato',
-                                          fontSize: 15,
-                                          color: Colors.black),
+                                          color: Colors.deepOrange),
                                     ),
-                                    value: item,
-                                  );
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  // setState(() {
-                                  selectedValue = cubit.SelectNationality(newValue);
-                                  // });
-                                }),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                              width: 430.0,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: 22.0,
-                                    ),
-                                    Container(
-                                        width: 320.0,
-                                        height: 35.0,
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            UserRegister userDate = UserRegister(
-                                              firstNameController.text.trim(),
-                                              lastNameController.text.trim(),
-                                              emailController.text.trim(),
-                                              phoneController.text.trim(),
-                                              " ",
-                                              selectedValue.trim(),
-                                              passwordController.text.trim(),
-                                              confirmPasswordController.text.trim(),
-                                            );
+                                    value: selectedValue,
+                                    items: country.map((item) {
+                                      return DropdownMenuItem(
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                              fontFamily: 'Lato',
+                                              fontSize: 15,
+                                              color: Colors.black),
+                                        ),
+                                        value: item,
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValue) {
+                                      // setState(() {
+                                      selectedValue =
+                                          cubit.SelectNationality(newValue);
+                                      // });
+                                    }),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Container(
+                                width: 430.0,
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 22.0,
+                                      ),
+                                      Container(
+                                          width: 320.0,
+                                          height: 35.0,
+                                          child: MaterialButton(
+                                            onPressed: () {
+                                              UserRegister userDate = UserRegister(
+                                                firstNameController.text.trim(),
+                                                lastNameController.text.trim(),
+                                                emailController.text.trim(),
+                                                phoneController.text.trim(),
+                                                " ",
+                                                selectedValue.trim(),
+                                                passwordController.text.trim(),
+                                                confirmPasswordController.text
+                                                    .trim(),
+                                              );
 
-                                            Map<String, dynamic> data = userDate.toJson();
-                                            print('USER UPDATED DATA IS : $data');
-                                            cubit.postUser(User: data);
+                                              Map<String, dynamic> data =
+                                                  userDate.toJson();
+                                              print('USER UPDATED DATA IS : $data');
+                                              cubit.postUser(User: data);
 
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginScreen()),
-                                            );
-                                          },
-                                          color: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(20)),
-                                          child: Text("CREATE AN ACCOUNT",
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ))
-                                  ])),
-                        ]),
-                  )
-              )
-          );
-        }
-    );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginScreen()),
+                                              );
+                                            },
+                                            color: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Text("CREATE AN ACCOUNT",
+                                                style:
+                                                    TextStyle(color: Colors.white)),
+                                          ))
+                                    ])),
+                          ]),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ));
+        });
   }
 }
