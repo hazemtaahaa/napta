@@ -39,3 +39,33 @@ class Post{
         "Image":Image,
       };
 }
+
+
+
+class Comment{
+  String Content;
+  String Email;
+  int PostID;
+  int CommentID;
+  String FirstName;
+  String LastName;
+
+  Comment(String content, String email, int postid){
+    Content=content;
+    Email=email;
+    PostID=postid;
+  }
+  Comment.fromJson(Map<String, dynamic> json) {
+    CommentID = json['CommentID'];
+    Content = json['Content'];
+    FirstName = json['FirstName'];
+    LastName = json['LastName'];
+    PostID = json['PostID'];
+  }
+  Map<String, dynamic> toJson() =>
+      {
+        "Content": Content,
+        "Email":Email,
+        "PostID":PostID,
+      };
+}

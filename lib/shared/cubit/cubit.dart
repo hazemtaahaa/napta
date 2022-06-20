@@ -11,8 +11,6 @@ import 'package:napta/models/user/loginModel.dart';
 import 'package:napta/shared/cubit/states.dart';
 import 'package:napta/shared/network/remote/dio_helper.dart';
 
-
-
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppIntialState());
 
@@ -33,15 +31,15 @@ class AppCubit extends Cubit<AppStates> {
 
   int incrementCounter() {
     emit(IncrementState());
-   counter++;
-
+    counter++;
   }
+
   int decrementCounter() {
     emit(DecrementState());
-   if(counter>1)
-    counter--;
+    if (counter > 1) counter--;
   }
-String selectPlant(String s){
+
+  String selectPlant(String s) {
     emit(SelectPlantState());
     return s;
   }
@@ -55,11 +53,34 @@ String selectPlant(String s){
     emit(PasswordVisibleState());
     return !state;
   }
-  bool likeISPressed(bool state){
-    emit(LikeIsPressedState());
-    return !state;
-  }
 
+  void UserLike(int index,int PostId) {
+    DioHelper.DoSomething();
+    DioHelper.postLike(
+            url: "api/UsersLikes/Like?email=$userName&id=$PostId",
+            data: null)
+        .then((value){
+          print('Like Is Pressed');
+          emit(LikeIsPressedState());
+          AppCubit.Posts[index].IsLiked=!AppCubit.Posts[index].IsLiked;
+          AppCubit.Posts[index].NumberOfLikes++;
+
+    })
+        .catchError(() {});
+  }
+  void UserDislike(int index,int PostId) {
+    DioHelper.DoSomething();
+    DioHelper.deleteLike(
+        url: "api/UsersLikes/Dislike?email=$userName&id=$PostId",
+        data: null)
+        .then((value){
+      print('DisLike Is Pressed');
+      emit(LikeIsPressedState());
+      AppCubit.Posts[index].IsLiked=!AppCubit.Posts[index].IsLiked;
+      AppCubit.Posts[index].NumberOfLikes--;
+    })
+        .catchError(() {});
+  }
   static List<MyInterstedPlants> _myInterstedPlants = [
     MyInterstedPlants(1, 'Tomato', false, "assets/images/tomato2.jpg"),
     MyInterstedPlants(2, 'Apple', false, ("assets/images/Apple.jpg")),
@@ -79,7 +100,8 @@ String selectPlant(String s){
     MyInterstedPlants(17, 'Raspberry', false, ("assets/images/Raspberry.jpg")),
   ];
 
-static  int counter =1;
+  static int counter = 1;
+
   // void getPlants() {
   //   DioHelper.getData(url: '/api/plants', query: null).then((value) {
   //     //print(value.data.toString());
@@ -96,6 +118,7 @@ static  int counter =1;
   static UserData userData;
   static String Token;
   static List<Plan> plans = [];
+  static List<Comment>Comments=[];
 
   void getPlants() {
     DioHelper.getData(
@@ -149,12 +172,14 @@ static  int counter =1;
       print(error.toString());
     });
   }
+
   void postPost({@required Map<String, dynamic> Post}) {
     print('Post Content is  : $Post');
     DioHelper.DoSomething();
-    DioHelper.postPost(url: 'api/Posts?email=$userName', data:Post, query:null)
+    DioHelper.postPost(
+            url: 'api/Posts?email=$userName', data: Post, query: null)
         .then((value) {
-          print("Post Created DONE");
+      print("Post Created DONE");
       print(value.toString());
       emit(PostCreatedSuccessState());
     }).catchError((error) {
@@ -162,8 +187,9 @@ static  int counter =1;
     });
   }
 
-
-  void userLogin({ @required String email, @required String password,
+  void userLogin({
+    @required String email,
+    @required String password,
   }) {
     emit(UserLoginLoading());
     DioHelper.postData(url: 'login', data: {
@@ -179,7 +205,10 @@ static  int counter =1;
     });
   }
 
-  void changePassword({@required String oldPassword, @required String newpassword, @required String confirmPassword,
+  void changePassword({
+    @required String oldPassword,
+    @required String newpassword,
+    @required String confirmPassword,
   }) {
     DioHelper.put(url: 'api/accounts/changepassword', data: {
       'oldPassword': oldPassword,
@@ -195,6 +224,23 @@ static  int counter =1;
     });
   }
 
+
+  void postComment({@required Map<String, dynamic> Comment, Comment com}) {
+    print('Post Content is  : $Comment');
+    DioHelper.DoSomething();
+    DioHelper.postComment(
+        url: 'api/UsersComments/Add', data: Comment, query: null)
+        .then((value) {
+      print("Comment Created DONE");
+      print(value.toString());
+      com.FirstName=userData.FirstName;
+      com.LastName=userData.LastName;
+      Comments.add(com);
+      emit(CommentCreatedSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
 
 
   void getUserData() {
@@ -235,6 +281,24 @@ static  int counter =1;
     });
   }
 
+  void getComments(int postID) {
+    DioHelper.DoSomething();
+    print('post id $postID');
+    DioHelper.getData(
+      url: 'api/UsersComments/Comments?id=$postID',
+    ).then((value) {
+      List<dynamic> list = value.data;
+      List<Comment>comments=[];
+      list.forEach((element) {
+        comments.add(Comment.fromJson(element));
+        print('Comment Content : ${comments.last.Content}');
+      });
+      emit(CommentUploadedSuccessfully(comments));
+      //Comments=comments;
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
 
   void getPosts() {
     DioHelper.DoSomething();
@@ -253,8 +317,9 @@ static  int counter =1;
     });
   }
 
-   static File profileImage;
+  static File profileImage;
   var picker = ImagePicker();
+
   void pickProfileImage() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -269,9 +334,6 @@ static  int counter =1;
       emit(PostImagePickedError());
     }
   }
-
-
-
 }
 
 class MyInterstedPlants {

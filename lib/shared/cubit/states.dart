@@ -55,3 +55,16 @@ class  GetPostsSuccessfullyState extends AppStates{
 }
 class LikeIsPressedState extends AppStates{}
 class PostCreatedSuccessState extends AppStates{}
+class CommentUploadedSuccessfully extends AppStates{
+  static List<Comment> comments;
+  CommentUploadedSuccessfully(List<Comment> thecomments){
+    comments=thecomments;
+  }
+}
+
+class CommentCreatedSuccessState extends AppStates{
+
+}
+
+
+
