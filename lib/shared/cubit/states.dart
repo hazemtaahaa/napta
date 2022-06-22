@@ -43,7 +43,12 @@ class PasswordVisibleState extends AppStates{}
 class IncrementState extends AppStates{}
 class DecrementState extends AppStates{}
 class SelectPlantState extends AppStates{}
-class PlansSuccessState extends AppStates{}
+class PlansSuccessState extends AppStates{
+  static int Id;
+  PlansSuccessState(int id){
+    Id=id;
+  }
+}
 class PostImagePickedSuccess extends AppStates{}
 class PostImagePickedError extends AppStates{}
 class  GetPostsSuccessfullyState extends AppStates{
@@ -62,9 +67,7 @@ class CommentUploadedSuccessfully extends AppStates{
   }
 }
 
-class CommentCreatedSuccessState extends AppStates{
-
-}
-
-
+class CommentCreatedSuccessState extends AppStates{}
+class PlanDescriptionSuccessState extends AppStates{}
+class PostImageSelectedSuccessState extends AppStates{}
 

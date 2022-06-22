@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:napta/models/plantsModel/PlantModel.dart';
 import 'package:napta/models/user/loginModel.dart';
 import 'package:napta/shared/cubit/states.dart';
 import 'package:napta/shared/network/remote/dio_helper.dart';
+import 'package:http/http.dart' as http;
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppIntialState());
@@ -66,20 +68,25 @@ class AppCubit extends Cubit<AppStates> {
           AppCubit.Posts[index].NumberOfLikes++;
 
     })
-        .catchError(() {});
+        .catchError((Object error) {
+      print(error.toString());
+    });
   }
   void UserDislike(int index,int PostId) {
     DioHelper.DoSomething();
     DioHelper.deleteLike(
-        url: "api/UsersLikes/Dislike?email=$userName&id=$PostId",
-        data: null)
+        url: "api/UsersLikes/Dislike?email=$userName&id=$PostId", data: null)
         .then((value){
       print('DisLike Is Pressed');
       emit(LikeIsPressedState());
       AppCubit.Posts[index].IsLiked=!AppCubit.Posts[index].IsLiked;
       AppCubit.Posts[index].NumberOfLikes--;
+
     })
-        .catchError(() {});
+        .catchError((Object error) {
+
+          print(error.toString());
+    });
   }
   static List<MyInterstedPlants> _myInterstedPlants = [
     MyInterstedPlants(1, 'Tomato', false, "assets/images/tomato2.jpg"),
@@ -235,6 +242,9 @@ class AppCubit extends Cubit<AppStates> {
       print(value.toString());
       com.FirstName=userData.FirstName;
       com.LastName=userData.LastName;
+
+
+
       Comments.add(com);
       emit(CommentCreatedSuccessState());
     }).catchError((error) {
@@ -261,21 +271,42 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+
   void getPlans(int plantID) {
-    plans.clear();
     DioHelper.initialize();
     DioHelper.getFertPlans(
-      url: 'api/PlansDescription/FertPlans?id=$plantID',
+      url: 'api/Plans/GetAll?id=$plantID',
     ).then((value) {
       List<dynamic> list = value.data;
       print("Plaaaaaaaaaaaans");
+      int id=0;
+      list.forEach((element) {
+        id= element['ID'];
+      });
+      print('pppppp:  ${value.data.toString()}');
+      emit(PlansSuccessState(id));
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
 
+
+
+
+  void getPlansDescription(int plantID) {
+    plans.clear();
+    DioHelper.initialize();
+    DioHelper.getFertPlans(
+      url: 'api/PlanFertilizers/FertPlans?id=$plantID',
+    ).then((value) {
+      List<dynamic> list = value.data;
+      print("Plaaaaaaaaaaaans");
       list.forEach((element) {
         plans.add(Plan.fromJson(element));
         print('Week num : ${plans.last.FertQuntities.last.Quantity}');
       });
       print('FertPLaaaan:  ${value.data.toString()}');
-      emit(PlansSuccessState());
+      emit(PlanDescriptionSuccessState());
     }).catchError((error) {
       print(error.toString());
     });
@@ -319,7 +350,6 @@ class AppCubit extends Cubit<AppStates> {
 
   static File profileImage;
   var picker = ImagePicker();
-
   void pickProfileImage() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -334,6 +364,57 @@ class AppCubit extends Cubit<AppStates> {
       emit(PostImagePickedError());
     }
   }
+  static XFile testImage;
+  static String PostImage;
+  Future<XFile> getImageFromgallery() async {
+    XFile image = await picker.pickImage(
+        source: ImageSource.gallery);
+    testImage=image;
+    _uploadFile();
+  }
+  Future<XFile> getPostImageFromgallery() async {
+    XFile image = await picker.pickImage(
+        source: ImageSource.gallery);
+    PostImage='assets/images/Peach.jpg';
+    emit(PostImageSelectedSuccessState());
+  }
+
+  Future<XFile> getImageFromCamera() async {
+    XFile image = await picker.pickImage(
+        source: ImageSource.camera);
+    testImage=image;
+    _uploadFile();
+  }
+
+  void _uploadFile() async {
+    var url = Uri.parse('https://c597-156-203-54-149.eu.ngrok.io/');
+    var request = http.MultipartRequest('POST', url);
+    request.files.add(await http.MultipartFile.fromPath(
+        'file', testImage.path.toString()));
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      // ignore: avoid_print
+      print("Uploaded successfully ");
+      getText();
+
+    } else {
+      // ignore: avoid_print
+      print("Error .... ");
+    }
+  }
+  var text = "";
+  getText() async {
+    final url = Uri.parse('https://c597-156-203-54-149.eu.ngrok.io/');
+    final res = await http.get(url);
+    if (res.statusCode == 200) {
+      var obj = json.decode(res.body);
+        text = obj['name'];
+        print('3nnnnnnnnnn $text');
+    } else {
+      throw Exception('Error!');
+    }
+  }
+
 }
 
 class MyInterstedPlants {

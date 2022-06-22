@@ -87,110 +87,113 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: Form(
                               child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 50,
-                                    ),
-                                    Container(
-                                        width: 350.0,
-                                        height: 40.0,
-                                        child: TextFormField(
-                                          controller: emailController,
-                                          keyboardType: TextInputType.emailAddress,
-                                          decoration: InputDecoration(
-                                              labelText: "Username",
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 50,
+                                      ),
+                                      Container(
+                                          width: 320.0,
+                                          height: 40.0,
+                                          child: TextFormField(
+                                            controller: emailController,
+                                            keyboardType: TextInputType.emailAddress,
+                                            decoration: InputDecoration(
+                                                labelText: "Username",
+                                                border: OutlineInputBorder(
+                                                    borderSide: const BorderSide(
+                                                        color: Colors.white,
+                                                        width: 2.0),
+                                                    borderRadius:
+                                                    BorderRadius.circular(25.0)),
+                                                prefixIcon: Icon(Icons.email)),
+                                            cursorColor: Colors.black,
+                                            style:TextStyle(fontSize:15 ),
+                                          )),
+                                      SizedBox(
+                                        height: 40,
+                                      ),
+                                      Container(
+                                          width: 320.0,
+                                          height: 40.0,
+                                          child: TextFormField(
+                                            controller: passwordController,
+                                            keyboardType:
+                                            TextInputType.visiblePassword,
+                                            obscureText:passwordVisible,
+                                            decoration: InputDecoration(
+                                              labelText: "Password",
+
                                               border: OutlineInputBorder(
+
                                                   borderSide: const BorderSide(
-                                                      color: Colors.white,
+                                                      color: Colors.green,
                                                       width: 2.0),
                                                   borderRadius:
                                                   BorderRadius.circular(25.0)),
-                                              prefixIcon: Icon(Icons.email)),
-                                          cursorColor: Colors.black,
-                                          style:TextStyle(fontSize:15 ),
-                                        )),
-                                    SizedBox(
-                                      height: 40,
-                                    ),
-                                    Container(
-                                        width: 350.0,
-                                        height: 40.0,
-                                        child: TextFormField(
-                                          controller: passwordController,
-                                          keyboardType:
-                                          TextInputType.visiblePassword,
-                                          obscureText:passwordVisible,
-                                          decoration: InputDecoration(
-                                            labelText: "Password",
+                                              fillColor: Colors.white,
+                                              prefixIcon: Icon(Icons.lock),
+                                              suffixIcon:IconButton(
+                                                icon:Icon(
+                                                    passwordVisible?Icons.visibility:Icons.visibility_off
+                                                ),
+                                                onPressed: (){
 
-                                            border: OutlineInputBorder(
+                                                  passwordVisible= cubit.changePasswordVisablity(passwordVisible);
 
-                                                borderSide: const BorderSide(
-                                                    color: Colors.green,
-                                                    width: 2.0),
-                                                borderRadius:
-                                                BorderRadius.circular(25.0)),
-                                            fillColor: Colors.white,
-                                            prefixIcon: Icon(Icons.lock),
-                                            suffixIcon:IconButton(
-                                              icon:Icon(
-                                                  passwordVisible?Icons.visibility:Icons.visibility_off
+                                                },
                                               ),
-                                              onPressed: (){
-
-                                                passwordVisible= cubit.changePasswordVisablity(passwordVisible);
-
-                                              },
                                             ),
-                                          ),
-                                          cursorColor: Colors.black,
-                                          style:TextStyle(fontSize:15 ),
-                                        )),
-                                    FlatButton(
-                                      onPressed: () {
-
-                                      },
-                                      child: Text("Forget Password!",
-                                          style: TextStyle(
-                                              color: Colors.deepOrange,
-                                              fontSize: 15,
-                                              fontFamily: 'Lato')),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    ConditionalBuilder(
-                                      condition: state is !UserLoginLoading,
-                                      builder: (context) => Container(
-                                          width: 200.0,
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                             // cubit.getPlans(1);
-                                              print(emailController.text);
-                                              print(passwordController.text);
-                                              AppCubit.userName =
-                                                  emailController.text;
-                                              cubit.userLogin(
-                                                  email: '${emailController.text}',
-                                                  password: '${passwordController.text}');
-                                              Plant plant =
-                                              Plant(1, "Tomato", "imagepath");
-                                            },
-                                            color: Colors.green[900],
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(20)),
-                                            child: Text("Login",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontFamily: 'Lato',
-                                                    fontSize: 20)),
+                                            cursorColor: Colors.black,
+                                            style:TextStyle(fontSize:15 ),
                                           )),
-                                      fallback: (context) => Center(
-                                          child: CircularProgressIndicator()),
-                                    ),
-                                  ],
+                                      FlatButton(
+                                        onPressed: () {
+
+                                        },
+                                        child: Text("Forget Password!",
+                                            style: TextStyle(
+                                                color: Colors.deepOrange,
+                                                fontSize: 15,
+                                                fontFamily: 'Lato')),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      ConditionalBuilder(
+                                        condition: state is !UserLoginLoading,
+                                        builder: (context) => Container(
+                                            width: 200.0,
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                               // cubit.getPlans(1);
+                                                print(emailController.text);
+                                                print(passwordController.text);
+                                                AppCubit.userName =
+                                                    emailController.text;
+                                                cubit.userLogin(
+                                                    email: '${emailController.text}',
+                                                    password: '${passwordController.text}');
+                                                Plant plant =
+                                                Plant(1, "Tomato", "imagepath");
+                                              },
+                                              color: Colors.green[900],
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(20)),
+                                              child: Text("Login",
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontFamily: 'Lato',
+                                                      fontSize: 20)),
+                                            )),
+                                        fallback: (context) => Center(
+                                            child: CircularProgressIndicator()),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

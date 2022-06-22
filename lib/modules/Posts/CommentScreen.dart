@@ -66,11 +66,18 @@ class CommentsScreen extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        CircleAvatar(
-                                          radius: 25.0,
-                                          backgroundImage: AssetImage(
-                                              "assets/images/HazemTaha.jpeg"),
-                                        ),
+                                        if( AppCubit.Comments[index].UserImage != null)
+                                          CircleAvatar(
+                                            radius: 25.0,
+                                            backgroundImage: AssetImage(
+                                                AppCubit.Comments[index].UserImage),
+                                          )
+                                        else
+                                          CircleAvatar(
+                                            radius: 25.0,
+                                            backgroundImage: AssetImage(
+                                                "assets/images/HazemTaha.jpeg"),
+                                          ),
                                         SizedBox(
                                           width: 5,
                                         ),

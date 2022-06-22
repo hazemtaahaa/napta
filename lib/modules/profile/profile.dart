@@ -18,6 +18,7 @@ class Profile extends StatelessWidget {
   UserData userD;
   List<Plant> plants;
   final ImagePicker _picker = ImagePicker();
+  //image location
   File image;
   XFile photo;
   @override
@@ -90,21 +91,16 @@ class Profile extends StatelessWidget {
                                     alignment: Alignment.center,
                                     children: [
                                       //photo stack
-                                      if(AppCubit.profileImage != null)
+                                      if(userD.ProfilePic.isNotEmpty)
                                       CircleAvatar(
                                         radius: 80,
-                                        backgroundImage:Image.file(
-                                          AppCubit.profileImage,
-                                          width: double.infinity,
-                                          height: 230.0,
-                                          fit: BoxFit.cover,
-                                        ).image, //avtar if my img
-                                      ),
-                                      if(AppCubit.profileImage == null)
+                                        backgroundImage:AssetImage(userD.ProfilePic), //avtar if my img
+                                      )
+                                    else if(userD.ProfilePic.isEmpty)
                                         CircleAvatar(
                                           radius: 80,
                                           backgroundImage:
-                                          AssetImage("assets/images/HazemTaha.jpeg"), //avtar if my img
+                                          AssetImage("assets/images/UserImageDef.jpeg"), //avtar if my img
                                         ),
                                       Container(
                                         height: 180,
@@ -300,7 +296,7 @@ class Profile extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green[900],
+                          color: Colors.blue,
                           letterSpacing: 1.5),
                     ),
                     onPressed: () {

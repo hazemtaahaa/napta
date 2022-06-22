@@ -49,7 +49,7 @@ class RegisterScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: 600,
+                height: 550,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -57,82 +57,86 @@ class RegisterScreen extends StatelessWidget {
                       height: 500,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.5),
-                        border: Border.all(color: Colors.green[600], width: 1.7),
+                        border: Border.all(color: Colors.green[900], width: 1.5),
                         borderRadius: BorderRadius.circular(40), //Card
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: const EdgeInsets.fromLTRB(6, 1, 6, 6),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Register",
-                              style: TextStyle(
-                                letterSpacing:1.5,
-                                  fontSize: 23
-                              ),),
-                            SizedBox(height: 20,),
-                            Container(
-                                width: 430.0,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-
-                                      Container(
-                                          width: 160.0,
-                                          height: 35.0,
-                                          child: TextFormField(
-                                            controller: firstNameController,
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            decoration: InputDecoration(
-                                                labelText: "First Name",
-                                                labelStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontFamily: 'Lato'),
-                                                border: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        color: Colors.green,
-                                                        width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25.0)),
-                                                fillColor: Colors.black,
-                                                prefixIcon: Icon(
-                                                  Icons.person,
-                                                  color: Colors.black,
-                                                )),
-                                            cursorColor: Colors.black,
-                                          )),
-                                      SizedBox(
-                                        width: 5.0,
-                                      ),
-                                      Container(
-                                          width: 160.0,
-                                          height: 35.0,
-                                          child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            controller: lastNameController,
-                                            decoration: InputDecoration(
-                                                labelText: "Last Name",
-                                                labelStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12,
-                                                    fontFamily: 'Lato'),
-                                                border: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        color: Colors.green,
-                                                        width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25.0)),
-                                                fillColor: Colors.black,
-                                                prefixIcon: Icon(Icons.person)),
-                                            cursorColor: Colors.black,
-                                          )),
-                                    ])),
+                            Row(
+                              mainAxisAlignment:MainAxisAlignment.center,
+                              children: [
+                                Text("Registration",
+                                  style: TextStyle(
+                                    letterSpacing:1.5,
+                                      fontSize: 25
+                                      ,fontWeight:FontWeight.bold,
+                                    color:Colors.blueGrey[800]
+                                  ),),
+                              ],
+                            ),
+                            SizedBox(height: 30,),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      width: 160.0,
+                                      height: 35.0,
+                                      child: TextFormField(
+                                        controller: firstNameController,
+                                        keyboardType:
+                                        TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                            labelText: "First Name",
+                                            labelStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontFamily: 'Lato'),
+                                            border: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    color: Colors.green,
+                                                    width: 2.0),
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    25.0)),
+                                            fillColor: Colors.black,
+                                            prefixIcon: Icon(
+                                              Icons.person,
+                                              //color: Colors.black,
+                                            )),
+                                        cursorColor: Colors.black,
+                                      )),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Container(
+                                      width: 160.0,
+                                      height: 35.0,
+                                      child: TextFormField(
+                                        keyboardType:
+                                        TextInputType.emailAddress,
+                                        controller: lastNameController,
+                                        decoration: InputDecoration(
+                                            labelText: "Last Name",
+                                            labelStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontFamily: 'Lato'),
+                                            border: OutlineInputBorder(
+                                                borderSide: const BorderSide(
+                                                    color: Colors.green,
+                                                    width: 2.0),
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    25.0)),
+                                            fillColor: Colors.black,
+                                            prefixIcon: Icon(Icons.person)),
+                                        cursorColor: Colors.black,
+                                      )),
+                                ]),
                             SizedBox(
                               height: 15.0,
                             ),
@@ -141,9 +145,6 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 15.0,
-                                      ),
                                       Container(
                                           width: 330.0,
                                           height: 35.0,
@@ -177,9 +178,6 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 15.0,
-                                      ),
                                       Container(
                                           width: 330.0,
                                           height: 35.0,
@@ -213,9 +211,7 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 15.0,
-                                      ),
+
                                       Container(
                                           width: 330.0,
                                           height: 35.0,
@@ -252,9 +248,7 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 15.0,
-                                      ),
+
                                       Container(
                                           width: 330.0,
                                           height: 35.0,
@@ -296,7 +290,7 @@ class RegisterScreen extends StatelessWidget {
                                       "Select Nationality",
                                       style: TextStyle(
                                           fontFamily: 'Lato',
-                                          color: Colors.deepOrange),
+                                          color: Colors.blue[700],fontSize: 16),
                                     ),
                                     value: selectedValue,
                                     items: country.map((item) {
@@ -327,12 +321,10 @@ class RegisterScreen extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        width: 22.0,
-                                      ),
+
                                       Container(
-                                          width: 320.0,
-                                          height: 35.0,
+                                          width: 200.0,
+                                          height: 40.0,
                                           child: MaterialButton(
                                             onPressed: () {
                                               UserRegister userDate = UserRegister(
@@ -359,13 +351,15 @@ class RegisterScreen extends StatelessWidget {
                                                         LoginScreen()),
                                               );
                                             },
-                                            color: Colors.green,
+                                            color: Colors.green[900],
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20)),
                                             child: Text("CREATE AN ACCOUNT",
                                                 style:
-                                                    TextStyle(color: Colors.white)),
+                                                    TextStyle(color: Colors.white,
+                                                    letterSpacing:1,
+                                                    wordSpacing: 2)),
                                           ))
                                     ])),
                           ]),

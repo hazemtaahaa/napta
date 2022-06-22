@@ -31,23 +31,21 @@ class PostScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.white,
             actions: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 230, 0),
-                child: MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreatePost()),
-                      );
-                    },
-                    child: Text(
-                      "Create Post",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Lato',
-                      ),
-                    )),
+              MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CreatePost()),
+                  );
+                },
+                child: Text(
+                  "Create Post",
+                  style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 16,
+                    fontFamily: 'Lato',
+                  ),
+                ),
               )
             ],
           ),
@@ -71,6 +69,13 @@ class PostScreen extends StatelessWidget {
                                 child: Column(children: [
                                   Row(
                                     children: [
+                                      if(AppCubit.Posts[index].UserImage != null)
+                                        CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundImage: AssetImage(
+                                              AppCubit.Posts[index].UserImage),
+                                        )
+                                      else
                                       CircleAvatar(
                                         radius: 25.0,
                                         backgroundImage: AssetImage(
@@ -149,9 +154,7 @@ class PostScreen extends StatelessWidget {
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
-                                        image: Image.asset(
-                                                "${AppCubit.Posts[index].Image}")
-                                            .image,
+                                        image: Image.asset( "${AppCubit.Posts[index].Image}").image,
                                       )),
                                     ),
                                     fallback: (context) => SizedBox(),
@@ -230,11 +233,18 @@ class PostScreen extends StatelessWidget {
                                         child: InkWell(
                                           child: Row(
                                             children: [
-                                              CircleAvatar(
-                                                radius: 18.0,
-                                                backgroundImage: AssetImage(
-                                                    "assets/images/HazemTaha.jpeg"),
-                                              ),
+                                              if(AppCubit.Posts[index].UserImage != null)
+                                                CircleAvatar(
+                                                  radius: 25.0,
+                                                  backgroundImage: AssetImage(
+                                                      AppCubit.Posts[index].UserImage),
+                                                )
+                                              else
+                                                CircleAvatar(
+                                                  radius: 25.0,
+                                                  backgroundImage: AssetImage(
+                                                      "assets/images/HazemTaha.jpeg"),
+                                                ),
                                               SizedBox(width: 14),
                                               Text(
                                                 "Write a comment ...",

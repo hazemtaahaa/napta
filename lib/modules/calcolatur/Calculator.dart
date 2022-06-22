@@ -1,8 +1,6 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:napta/modules/calcolatur/FertilizationPlantMOre.dart';
 import 'package:napta/shared/cubit/cubit.dart';
 import 'package:napta/shared/cubit/states.dart';
 import 'FertilizationPlan.dart';
@@ -17,15 +15,9 @@ class CalculatorScreen extends StatelessWidget {
     'Grape',
     'Orange',
     'Soybean',
-    'Squash',
     'Potato',
     'Corn',
-    'Strawberry',
-    'Peach',
-    'Blueberry',
-    'Cherry',
     'Pepper',
-    'Raspberry'
   ];
   Map<String, int> plantsID = {
     'Tomato': 1,
@@ -50,7 +42,11 @@ class CalculatorScreen extends StatelessWidget {
         create: (BuildContext context) => AppCubit(),
         child: BlocConsumer<AppCubit, AppStates>(
             listener: (BuildContext context, AppStates state) {
+              AppCubit cubit = AppCubit.get(context);
               if(state is PlansSuccessState){
+                cubit.getPlansDescription(PlansSuccessState.Id);
+              }
+              else if(state is PlanDescriptionSuccessState){
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -156,7 +152,7 @@ class CalculatorScreen extends StatelessWidget {
                             ),
                             Container(
                               child: Text(
-                                "The Cultivated Area In (Acre)",
+                                "The Cultivated Area In (Acre/Tree)",
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,

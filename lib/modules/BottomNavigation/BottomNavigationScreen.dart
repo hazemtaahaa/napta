@@ -12,16 +12,16 @@ class BottomNavigationScreen extends StatefulWidget {
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   final _screens = [
     {
-      'screen': Profile(),
+      'screen': PostScreen(),
     },
     {
       'screen': CalculatorScreen(),
     },
     {
-      'screen': PostScreen(),
+      'screen': ModelScreen(),
     },
     {
-      'screen': ModelScreen(),
+      'screen': Profile(),
     }
   ];
   int _selectedScreenIndex = 0;
@@ -42,18 +42,18 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         selectedFontSize: 15,
         currentIndex: _selectedScreenIndex,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.home),label:"Posts"),
           BottomNavigationBarItem(
               icon: Icon(Icons.calculate), label: "Calculator"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_edu),
-            label: "Previous Analysis",
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.analytics),
             label: "Model",
             /* title: Text("Image Analysis",
                   style: TextStyle(fontFamily: 'Lato', color: Colors.green))*/
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: "Profile",
           ),
         ],
       ),

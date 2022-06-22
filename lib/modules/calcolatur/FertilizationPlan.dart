@@ -152,7 +152,7 @@ class FertilizationPlant extends StatelessWidget {
                                                               "${AppCubit.plans[index].FertQuntities[0].FertilizerName}" ,
                                                               style: TextStyle(
                                                                 fontFamily: 'Lato',
-                                                                fontSize: 12,
+                                                                fontSize: 15,
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -161,7 +161,7 @@ class FertilizationPlant extends StatelessWidget {
                                                             Text(
                                                               "${(AppCubit.plans[index].FertQuntities[0].Quantity)*AppCubit.counter} kg",
                                                               style: TextStyle(
-                                                                fontSize: 11,
+                                                                fontSize: 13,
                                                               ),
                                                             ),
                                                           ],
@@ -175,7 +175,7 @@ class FertilizationPlant extends StatelessWidget {
                                                               "${AppCubit.plans[index].FertQuntities[1].FertilizerName}",
                                                               style: TextStyle(
                                                                 fontFamily: 'Lato',
-                                                                fontSize: 12,
+                                                                fontSize: 15,
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -184,7 +184,7 @@ class FertilizationPlant extends StatelessWidget {
                                                             Text(
                                                               "${(AppCubit.plans[index].FertQuntities[1].Quantity)*AppCubit.counter} kg",
                                                               style: TextStyle(
-                                                                fontSize: 11,
+                                                                fontSize: 13,
                                                               ),
                                                             ),
                                                           ],
@@ -198,7 +198,7 @@ class FertilizationPlant extends StatelessWidget {
                                                               "${AppCubit.plans[index].FertQuntities[2].FertilizerName}",
                                                               style: TextStyle(
                                                                 fontFamily: 'Lato',
-                                                                fontSize: 12,
+                                                                fontSize: 15,
                                                               ),
                                                             ),
                                                             SizedBox(
@@ -207,7 +207,7 @@ class FertilizationPlant extends StatelessWidget {
                                                             Text(
                                                               "${(AppCubit.plans[index].FertQuntities[2].Quantity)*AppCubit.counter} kg",
                                                               style: TextStyle(
-                                                                fontSize: 11,
+                                                                fontSize: 13,
                                                               ),
                                                             ),
                                                           ],

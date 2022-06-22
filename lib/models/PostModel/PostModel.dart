@@ -6,8 +6,8 @@ class Post{
   String Nationality;
   String FirstName;
   String LastName;
-  int NumberOfComments;
-  int NumberOfLikes;
+  int NumberOfComments=0;
+  int NumberOfLikes=0;
   String UserImage;
   String PlantName;
   String CreationDate;
@@ -49,6 +49,7 @@ class Comment{
   int CommentID;
   String FirstName;
   String LastName;
+  String UserImage;
 
   Comment(String content, String email, int postid){
     Content=content;
@@ -61,6 +62,7 @@ class Comment{
     FirstName = json['FirstName'];
     LastName = json['LastName'];
     PostID = json['PostID'];
+    UserImage=json['UserImage'];
   }
   Map<String, dynamic> toJson() =>
       {
