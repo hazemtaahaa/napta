@@ -66,7 +66,7 @@ class CommentsScreen extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        if( AppCubit.Comments[index].UserImage != null)
+                                        if( AppCubit.Comments[index].UserImage.isNotEmpty)
                                           CircleAvatar(
                                             radius: 25.0,
                                             backgroundImage: AssetImage(
@@ -76,7 +76,7 @@ class CommentsScreen extends StatelessWidget {
                                           CircleAvatar(
                                             radius: 25.0,
                                             backgroundImage: AssetImage(
-                                                "assets/images/HazemTaha.jpeg"),
+                                                "assets/images/UserImageDef.jpeg"),
                                           ),
                                         SizedBox(
                                           width: 5,
@@ -151,9 +151,7 @@ class CommentsScreen extends StatelessWidget {
                                     AppCubit.userName,
                                     PostId);
                                 cubit.postComment(Comment: comment.toJson(),com: comment);
-
                                 commentController.clear();
-
 
                               },
                               child: Icon(

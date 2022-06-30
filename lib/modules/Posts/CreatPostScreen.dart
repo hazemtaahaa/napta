@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:napta/models/PostModel/PostModel.dart';
+import 'package:napta/modules/BottomNavigation/BottomNavigationScreen.dart';
 import 'package:napta/modules/Posts/PostScreens.dart';
 import 'package:napta/shared/cubit/cubit.dart';
 import 'package:napta/shared/cubit/states.dart';
@@ -54,12 +56,20 @@ class CreatePost extends StatelessWidget {
         if (state is PostImageSelectedSuccessState) {
           Post_image = AppCubit.PostImage;
         } else if (state is PostCreatedSuccessState) {
+          Fluttertoast.showToast(
+              msg: "Post is Created Successfully",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0);
           cubit.getPosts();
         } else if (state is GetPostsSuccessfullyState) {
           AppCubit.Posts = GetPostsSuccessfullyState.posts;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PostScreen()),
+            MaterialPageRoute(builder: (context) => BottomNavigationScreen()),
           );
         }
       }, builder: (BuildContext context, AppStates state) {
@@ -91,10 +101,20 @@ class CreatePost extends StatelessWidget {
             actions: [
               MaterialButton(
                   onPressed: () {
-                    Post post = Post(postController.text, Post_image);
-
-                    cubit.postPost(Post: post.toJson());
-                    postController.clear();
+                    if (postController.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Post Can not be empty!",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 5,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                    } else {
+                      Post post = Post(postController.text, Post_image);
+                      cubit.postPost(Post: post.toJson());
+                      postController.clear();
+                    }
                   },
                   child: Text(
                     "Post",

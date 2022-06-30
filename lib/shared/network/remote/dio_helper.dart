@@ -117,6 +117,16 @@ class DioHelper {
     return await dreg.get(url); //, queryParameters: query);
   }
 
+  static Future<Response> getDiseas({
+    @required String url,
+    //@required List<Map<String, dynamic>> query,
+  }) async {
+    return await dreg.get(url); //, queryParameters: query);
+  }
+
+
+
+
   static Future<Response> postPost({
     @required String url,
     dynamic query,

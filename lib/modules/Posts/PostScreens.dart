@@ -10,7 +10,8 @@ import 'package:napta/shared/cubit/states.dart';
 class PostScreen extends StatelessWidget {
   @override
   bool isPrassed = false;
-  int selectedIndex=0;
+  int selectedIndex = 0;
+
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => AppCubit(),
@@ -69,18 +70,19 @@ class PostScreen extends StatelessWidget {
                                 child: Column(children: [
                                   Row(
                                     children: [
-                                      if(AppCubit.Posts[index].UserImage != null)
+                                      if (AppCubit
+                                          .Posts[index].UserImage.isNotEmpty)
                                         CircleAvatar(
                                           radius: 25.0,
                                           backgroundImage: AssetImage(
                                               AppCubit.Posts[index].UserImage),
                                         )
                                       else
-                                      CircleAvatar(
-                                        radius: 25.0,
-                                        backgroundImage: AssetImage(
-                                            "assets/images/HazemTaha.jpeg"),
-                                      ),
+                                        CircleAvatar(
+                                          radius: 25.0,
+                                          backgroundImage: AssetImage(
+                                              "assets/images/UserImageDef.jpeg"),
+                                        ),
                                       SizedBox(width: 15),
                                       Expanded(
                                         child: Column(
@@ -154,7 +156,9 @@ class PostScreen extends StatelessWidget {
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
-                                        image: Image.asset( "${AppCubit.Posts[index].Image}").image,
+                                        image: Image.asset(
+                                                "${AppCubit.Posts[index].Image}")
+                                            .image,
                                       )),
                                     ),
                                     fallback: (context) => SizedBox(),
@@ -233,17 +237,19 @@ class PostScreen extends StatelessWidget {
                                         child: InkWell(
                                           child: Row(
                                             children: [
-                                              if(AppCubit.Posts[index].UserImage != null)
+                                              if (AppCubit.Posts[index]
+                                                  .UserImage.isNotEmpty)
                                                 CircleAvatar(
                                                   radius: 25.0,
                                                   backgroundImage: AssetImage(
-                                                      AppCubit.Posts[index].UserImage),
+                                                      AppCubit.Posts[index]
+                                                          .UserImage),
                                                 )
                                               else
                                                 CircleAvatar(
                                                   radius: 25.0,
                                                   backgroundImage: AssetImage(
-                                                      "assets/images/HazemTaha.jpeg"),
+                                                      "assets/images/UserImageDef.jpeg"),
                                                 ),
                                               SizedBox(width: 14),
                                               Text(
@@ -256,7 +262,7 @@ class PostScreen extends StatelessWidget {
                                             ],
                                           ),
                                           onTap: () {
-                                            selectedIndex=index;
+                                            selectedIndex = index;
                                             cubit.getComments(
                                                 AppCubit.Posts[index].PostId);
                                             // showBottomSheet(

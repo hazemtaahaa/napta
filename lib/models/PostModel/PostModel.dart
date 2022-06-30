@@ -49,7 +49,7 @@ class Comment{
   int CommentID;
   String FirstName;
   String LastName;
-  String UserImage;
+  String UserImage='assets/images/UserImageDef.jpeg';
 
   Comment(String content, String email, int postid){
     Content=content;
@@ -62,7 +62,7 @@ class Comment{
     FirstName = json['FirstName'];
     LastName = json['LastName'];
     PostID = json['PostID'];
-    UserImage=json['UserImage'];
+    //UserImage=json['UserImage'];
   }
   Map<String, dynamic> toJson() =>
       {

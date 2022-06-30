@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:napta/models/DiseasModel/Diseas.dart';
 import 'package:napta/models/Fartlization/FartlizationModel.dart';
 import 'package:napta/models/PostModel/PostModel.dart';
 import 'package:napta/models/plantsModel/PlantModel.dart';
@@ -56,38 +57,35 @@ class AppCubit extends Cubit<AppStates> {
     return !state;
   }
 
-  void UserLike(int index,int PostId) {
+  void UserLike(int index, int PostId) {
     DioHelper.DoSomething();
     DioHelper.postLike(
-            url: "api/UsersLikes/Like?email=$userName&id=$PostId",
-            data: null)
-        .then((value){
-          print('Like Is Pressed');
-          emit(LikeIsPressedState());
-          AppCubit.Posts[index].IsLiked=!AppCubit.Posts[index].IsLiked;
-          AppCubit.Posts[index].NumberOfLikes++;
-
-    })
-        .catchError((Object error) {
+        url: "api/UsersLikes/Like?email=$userName&id=$PostId", data: null)
+        .then((value) {
+      print('Like Is Pressed');
+      emit(LikeIsPressedState());
+      AppCubit.Posts[index].IsLiked = !AppCubit.Posts[index].IsLiked;
+      AppCubit.Posts[index].NumberOfLikes++;
+    }).catchError((Object error) {
       print(error.toString());
     });
   }
-  void UserDislike(int index,int PostId) {
+
+  void UserDislike(int index, int PostId) {
     DioHelper.DoSomething();
     DioHelper.deleteLike(
-        url: "api/UsersLikes/Dislike?email=$userName&id=$PostId", data: null)
-        .then((value){
+        url: "api/UsersLikes/Dislike?email=$userName&id=$PostId",
+        data: null)
+        .then((value) {
       print('DisLike Is Pressed');
       emit(LikeIsPressedState());
-      AppCubit.Posts[index].IsLiked=!AppCubit.Posts[index].IsLiked;
+      AppCubit.Posts[index].IsLiked = !AppCubit.Posts[index].IsLiked;
       AppCubit.Posts[index].NumberOfLikes--;
-
-    })
-        .catchError((Object error) {
-
-          print(error.toString());
+    }).catchError((Object error) {
+      print(error.toString());
     });
   }
+
   static List<MyInterstedPlants> _myInterstedPlants = [
     MyInterstedPlants(1, 'Tomato', false, "assets/images/tomato2.jpg"),
     MyInterstedPlants(2, 'Apple', false, ("assets/images/Apple.jpg")),
@@ -125,7 +123,7 @@ class AppCubit extends Cubit<AppStates> {
   static UserData userData;
   static String Token;
   static List<Plan> plans = [];
-  static List<Comment>Comments=[];
+  static List<Comment> Comments = [];
 
   void getPlants() {
     DioHelper.getData(
@@ -147,7 +145,7 @@ class AppCubit extends Cubit<AppStates> {
 
   void postPlants({@required List<Map<String, dynamic>> plants}) {
     DioHelper.postPlant(
-            url: 'api/userplants/addlist?email=$userName', data: plants)
+        url: 'api/userplants/addlist?email=$userName', data: plants)
         .then((value) {
       print(value.toString());
       emit(InterestedPlantsUpdated());
@@ -184,7 +182,7 @@ class AppCubit extends Cubit<AppStates> {
     print('Post Content is  : $Post');
     DioHelper.DoSomething();
     DioHelper.postPost(
-            url: 'api/Posts?email=$userName', data: Post, query: null)
+        url: 'api/Posts?email=$userName', data: Post, query: null)
         .then((value) {
       print("Post Created DONE");
       print(value.toString());
@@ -231,7 +229,6 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-
   void postComment({@required Map<String, dynamic> Comment, Comment com}) {
     print('Post Content is  : $Comment');
     DioHelper.DoSomething();
@@ -240,10 +237,8 @@ class AppCubit extends Cubit<AppStates> {
         .then((value) {
       print("Comment Created DONE");
       print(value.toString());
-      com.FirstName=userData.FirstName;
-      com.LastName=userData.LastName;
-
-
+      com.FirstName = userData.FirstName;
+      com.LastName = userData.LastName;
 
       Comments.add(com);
       emit(CommentCreatedSuccessState());
@@ -251,7 +246,6 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
-
 
   void getUserData() {
     DioHelper.Token = Token;
@@ -271,7 +265,6 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-
   void getPlans(int plantID) {
     DioHelper.initialize();
     DioHelper.getFertPlans(
@@ -279,9 +272,9 @@ class AppCubit extends Cubit<AppStates> {
     ).then((value) {
       List<dynamic> list = value.data;
       print("Plaaaaaaaaaaaans");
-      int id=0;
+      int id = 0;
       list.forEach((element) {
-        id= element['ID'];
+        id = element['ID'];
       });
       print('pppppp:  ${value.data.toString()}');
       emit(PlansSuccessState(id));
@@ -289,9 +282,6 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
-
-
-
 
   void getPlansDescription(int plantID) {
     plans.clear();
@@ -312,6 +302,23 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  static Diseas diseas;
+  static String plantDisease;
+
+  void getDiseaseResult(String disease) {
+    DioHelper.initialize();
+    DioHelper.getDiseas(
+      url: 'api/Diseases?id=$disease',
+    ).then((value) {
+      print("Get REsult DONEEE:");
+      print(value.data.toString());
+      Diseas disRes = Diseas.fromJson(value.data);
+      emit(DiseaseResultSuccessState(disRes));
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
   void getComments(int postID) {
     DioHelper.DoSomething();
     print('post id $postID');
@@ -319,7 +326,7 @@ class AppCubit extends Cubit<AppStates> {
       url: 'api/UsersComments/Comments?id=$postID',
     ).then((value) {
       List<dynamic> list = value.data;
-      List<Comment>comments=[];
+      List<Comment> comments = [];
       list.forEach((element) {
         comments.add(Comment.fromJson(element));
         print('Comment Content : ${comments.last.Content}');
@@ -342,6 +349,8 @@ class AppCubit extends Cubit<AppStates> {
         posts.add(Post.fromJson(element));
         print('${posts.last.PostId} ${posts.last.NumberOfLikes}');
       });
+      // posts=posts.reversed;
+      posts = posts.reversed.toList();
       emit(GetPostsSuccessfullyState(posts));
     }).catchError((error) {
       print(error.toString());
@@ -350,6 +359,7 @@ class AppCubit extends Cubit<AppStates> {
 
   static File profileImage;
   var picker = ImagePicker();
+
   void pickProfileImage() async {
     final pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -364,57 +374,90 @@ class AppCubit extends Cubit<AppStates> {
       emit(PostImagePickedError());
     }
   }
+
   static XFile testImage;
   static String PostImage;
+
   Future<XFile> getImageFromgallery() async {
-    XFile image = await picker.pickImage(
-        source: ImageSource.gallery);
-    testImage=image;
+    XFile image = await picker.pickImage(source: ImageSource.gallery);
+    testImage = image;
+    emit(ImageUploadedSuccecssfully());
     _uploadFile();
   }
+
   Future<XFile> getPostImageFromgallery() async {
-    XFile image = await picker.pickImage(
-        source: ImageSource.gallery);
-    PostImage='assets/images/Peach.jpg';
+    XFile image = await picker.pickImage(source: ImageSource.gallery);
+    PostImage = 'assets/images/Peach.jpg';
     emit(PostImageSelectedSuccessState());
   }
 
   Future<XFile> getImageFromCamera() async {
-    XFile image = await picker.pickImage(
-        source: ImageSource.camera);
-    testImage=image;
+    XFile image = await picker.pickImage(source: ImageSource.camera);
+    testImage = image;
     _uploadFile();
   }
 
   void _uploadFile() async {
-    var url = Uri.parse('https://c597-156-203-54-149.eu.ngrok.io/');
+    var url = Uri.parse('https://64d2-196-154-77-122.eu.ngrok.io/');
     var request = http.MultipartRequest('POST', url);
-    request.files.add(await http.MultipartFile.fromPath(
-        'file', testImage.path.toString()));
+    request.files.add(
+        await http.MultipartFile.fromPath('file', testImage.path.toString()));
     var response = await request.send();
     if (response.statusCode == 200) {
       // ignore: avoid_print
-      print("Uploaded successfully ");
+      print(testImage.path);
+      print("Uploaded successfully");
       getText();
-
     } else {
       // ignore: avoid_print
       print("Error .... ");
     }
   }
+
   var text = "";
+
+  // getText() async {
+  //   final url = Uri.parse('https://6a5e-156-203-28-179.eu.ngrok.io');
+  //   final res = await http.get(url);
+  //   print(res.statusCode);
+  //   if (res.statusCode == 200) {
+  //     var obj = json.decode(res.body);
+  //     text = obj['name'];
+  //     print('3nnnnnnnnnn $text');
+  //   } else {
+  //      throw Exception('Error!');
+  //   }
+  // }
+
   getText() async {
-    final url = Uri.parse('https://c597-156-203-54-149.eu.ngrok.io/');
+    final url = Uri.parse('https://64d2-196-154-77-122.eu.ngrok.io/');
     final res = await http.get(url);
+    //     .then((value) {
+    //   var obj = json.decode(value.body);
+    //   text = obj['name'];
+    //   print('da hoa el texttttttttttttttttttttttttt$text');
+    //
+    // }).catchError((error){
+    //   print("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror");
+    // });
     if (res.statusCode == 200) {
       var obj = json.decode(res.body);
-        text = obj['name'];
-        print('3nnnnnnnnnn $text');
+      text = obj['name'];
+      print('Result = ${text}');
+      if (text != 'Not Recognized') {
+        var examine = text.split('___');
+        print('we da how el tash5555555es ${examine[1]}');
+        getDiseaseResult(examine[1]);
+        plantDisease=examine[0];
+      }
+      else {
+        emit(ImageNotRecognizedState());
+      }
     } else {
-      throw Exception('Error!');
+      emit(ImageNotRecognizedState());
+      throw Exception(res.body);
     }
   }
-
 }
 
 class MyInterstedPlants {
